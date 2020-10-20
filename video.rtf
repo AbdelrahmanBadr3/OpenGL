@@ -1,0 +1,4156 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red253\green143\blue63;\red31\green31\blue36;\red252\green106\blue93;
+\red255\green255\blue255;\red108\green121\blue134;\red252\green95\blue163;\red65\green161\blue192;\red208\green191\blue105;
+\red103\green183\blue164;\red161\green103\blue230;\red253\green143\blue63;\red103\green183\blue164;}
+{\*\expandedcolortbl;;\csgenericrgb\c99131\c56076\c24611;\csgenericrgb\c12054\c12284\c14131;\csgenericrgb\c98912\c41558\c36568;
+\csgenericrgb\c100000\c100000\c100000\c85000;\csgenericrgb\c42394\c47462\c52518;\csgenericrgb\c98839\c37355\c63833;\csgenericrgb\c25490\c63137\c75294;\csgenericrgb\c81498\c74939\c41233;
+\csgenericrgb\c40538\c71705\c64209;\csgenericrgb\c63137\c40392\c90196;\csgenericrgb\c99216\c56078\c24706;\csgenericrgb\c40392\c71765\c64314;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab593
+\pard\tx593\pardeftab593\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 #include \cf4 <math.h>\cf5 \
+\cf2 #include \cf4 <stdio.h>\cf5 \
+\cf2 #include \cf4 <string.h>\cf5 \
+\cf2 #include \cf4 <GLUT/glut.h>\cf5 \
+\cf6 //#include <irrklang/irrKlang.h>\cf5 \
+\cf6 //using namespace irrklang;\cf5 \
+\
+\cf6 //ISoundEngine *SoundEngine = createIrrKlangDevice();\cf5 \
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 p0\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 p1\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 p2\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 p3\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 p4\cf5 [\cf9 2\cf5 ];\
+\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 turn\cf5  = \cf9 0\cf5 ;\
+\
+\cf6 //curve issues\cf5 \
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 mouseCliked\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 mouseReleased\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 inProcess\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 gameOver\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 isReached\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 isHit\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 isDefended\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 isWallHitted\cf5 =
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+
+\f1\b \cf7 bool
+\f0\b0 \cf5  \cf8 start\cf5 = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 powerValue\cf5  = \cf9 0\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 powerBar1\cf5  = \cf9 0\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 powerBar2\cf5  = \cf9 0\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 healthbar1\cf5  = \cf9 5\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 healthbar2\cf5  = \cf9 5\cf5 ;\
+\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 player1Pos\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 player2Pos\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 endPoint\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 ballPos\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 WallHitPos\cf5 [\cf9 2\cf5 ];\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 ballIndex\cf5  = -\cf9 1\cf5 ;\
+\
+\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 windowYSize\cf5  = \cf9 900\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 windowXSize\cf5  = \cf9 1200\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 transationPLayer2X\cf5  = \cf9 4700\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 transationPLayer2Y\cf5  = \cf9 350\cf5 ;\
+
+\f1\b \cf7 double
+\f0\b0 \cf5  \cf8 xTransfer\cf5  = -\cf9 10\cf5 ;\
+
+\f1\b \cf7 float
+\f0\b0 \cf5  \cf8 translatioCLoud\cf5  = \cf9 0\cf5 ;\
+
+\f1\b \cf7 float
+\f0\b0 \cf5  \cf8 scaling\cf5  = \cf9 0.2\cf5 ;\
+
+\f1\b \cf7 float
+\f0\b0 \cf5  \cf8 colorStatusColor\cf5  = \cf9 0\cf5 ;\
+
+\f1\b \cf7 float
+\f0\b0 \cf5  \cf8 wallHitTime\cf5 =\cf9 0\cf5 ;\
+
+\f1\b \cf7 float
+\f0\b0 \cf5  \cf8 translateMoon\cf5 =\cf9 0\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 translateMoon1\cf5 =\cf9 0\cf5 ;\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 d\cf5 =\cf9 0\cf5 ;\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 xDaynamic\cf5 =\cf9 0\cf5 ;\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawCircle\cf5 (
+\f1\b \cf7 double
+\f0\b0 \cf5  radius, 
+\f1\b \cf7 float
+\f0\b0 \cf5  x1, 
+\f1\b \cf7 float
+\f0\b0 \cf5  y1) \{\
+    
+\f1\b \cf7 float
+\f0\b0 \cf5   x2, y2;\
+    
+\f1\b \cf7 float
+\f0\b0 \cf5  angle;\
+    y1 = \cf10 windowYSize\cf5  - y1;\
+\
+    \cf11 glBegin\cf5 (\cf12 GL_TRIANGLE_FAN\cf5 );\
+    \cf11 glVertex2f\cf5 (x1, y1);\
+\
+    
+\f1\b \cf7 for
+\f0\b0 \cf5  (angle = \cf9 1.0f\cf5 ; angle < \cf9 361.0f\cf5 ; angle += \cf9 0.2\cf5 )\
+    \{\
+        x2 = x1 + \cf11 sin\cf5 (angle) * radius;\
+        y2 = y1 + \cf11 cos\cf5 (angle) * radius;\
+        \cf11 glVertex2f\cf5 (x2, y2);\
+    \}\
+\
+    \cf11 glEnd\cf5 ();\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawCircleHole\cf5 ( 
+\f1\b \cf7 float
+\f0\b0 \cf5  r,
+\f1\b \cf7 float
+\f0\b0 \cf5  cx, 
+\f1\b \cf7 float
+\f0\b0 \cf5  cy)\{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5      num_segments=\cf9 100\cf5 ;\
+   \cf11 glBegin\cf5 (\cf12 GL_LINE_LOOP\cf5 );\
+   
+\f1\b \cf7 for
+\f0\b0 \cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  ii = \cf9 0\cf5 ; ii < num_segments; ii++)\
+   \{\
+       
+\f1\b \cf7 float
+\f0\b0 \cf5  theta = \cf9 2.0f\cf5  * \cf9 3.1415926f\cf5  * 
+\f1\b \cf7 float
+\f0\b0 \cf5 (ii) / 
+\f1\b \cf7 float
+\f0\b0 \cf5 (num_segments);\cf6 //get the current angle\cf5 \
+\
+       
+\f1\b \cf7 float
+\f0\b0 \cf5  x = r * \cf11 cosf\cf5 (theta);\cf6 //calculate the x component\cf5 \
+       
+\f1\b \cf7 float
+\f0\b0 \cf5  y = r * \cf11 sinf\cf5 (theta);\cf6 //calculate the y component\cf5 \
+\
+       \cf11 glVertex2f\cf5 (x + cx, y + cy);\cf6 //output vertex\cf5 \
+\
+   \}\
+   \cf11 glEnd\cf5 ();\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawCircle1\cf5 (
+\f1\b \cf7 double
+\f0\b0 \cf5  radius, 
+\f1\b \cf7 float
+\f0\b0 \cf5  x1, 
+\f1\b \cf7 float
+\f0\b0 \cf5  y1) \{\
+    
+\f1\b \cf7 float
+\f0\b0 \cf5   x2, y2;\
+    
+\f1\b \cf7 float
+\f0\b0 \cf5  angle;\
+    y1 =  y1;\
+\
+    \cf11 glBegin\cf5 (\cf12 GL_TRIANGLE_FAN\cf5 );\
+    \cf11 glVertex2f\cf5 (x1, y1);\
+\
+    
+\f1\b \cf7 for
+\f0\b0 \cf5  (angle = \cf9 1.0f\cf5 ; angle < \cf9 361.0f\cf5 ; angle += \cf9 0.2\cf5 )\
+    \{\
+        x2 = x1 + \cf11 sin\cf5 (angle) * radius;\
+        y2 = y1 + \cf11 cos\cf5 (angle) * radius;\
+        \cf11 glVertex2f\cf5 (x2, y2);\
+    \}\
+\
+    \cf11 glEnd\cf5 ();\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 convertor\cf5 () \{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  shiftYUP = \cf9 50\cf5 ;\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 turn\cf5  % \cf9 2\cf5  == \cf9 0\cf5 ) \{\
+\
+        \cf10 p3\cf5 [\cf9 0\cf5 ] = \cf10 player2Pos\cf5 [\cf9 0\cf5 ];\
+        \cf10 p3\cf5 [\cf9 1\cf5 ] = \cf10 player2Pos\cf5 [\cf9 1\cf5 ];\
+\
+        \cf10 p0\cf5 [\cf9 0\cf5 ] = \cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 powerValue\cf5 ;\
+        \cf10 p0\cf5 [\cf9 1\cf5 ] = shiftYUP;\
+\
+        \cf10 p1\cf5 [\cf9 0\cf5 ] = \cf10 p0\cf5 [\cf9 0\cf5 ];\
+        \cf10 p1\cf5 [\cf9 1\cf5 ] = shiftYUP + \cf9 0.5\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]);\
+\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf9 0.75\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]) <= \cf9 50\cf5 ) shiftYUP = \cf9 100\cf5 ;\
+        \cf10 p2\cf5 [\cf9 0\cf5 ] = \cf10 p3\cf5 [\cf9 0\cf5 ] - (\cf9 4\cf5  + \cf9 8\cf5  * ((\cf10 powerValue\cf5 ) / \cf9 63\cf5 ));\
+        \cf10 p2\cf5 [\cf9 1\cf5 ] = shiftYUP + \cf9 0.75\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]);\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+\
+\
+        \cf10 p0\cf5 [\cf9 0\cf5 ] = \cf10 player1Pos\cf5 [\cf9 0\cf5 ];\
+        \cf10 p0\cf5 [\cf9 1\cf5 ] = \cf10 player1Pos\cf5 [\cf9 1\cf5 ];\
+\
+        \cf10 p3\cf5 [\cf9 0\cf5 ] = \cf10 p0\cf5 [\cf9 0\cf5 ] + \cf10 powerValue\cf5 ;\
+        \cf10 p3\cf5 [\cf9 1\cf5 ] = shiftYUP;\
+\
+        \cf10 p2\cf5 [\cf9 0\cf5 ] = \cf10 p3\cf5 [\cf9 0\cf5 ];\
+        \cf10 p2\cf5 [\cf9 1\cf5 ] = shiftYUP + \cf9 0.5\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]);\
+\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf9 0.75\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]) <= \cf9 50\cf5 ) shiftYUP = \cf9 100\cf5 ;\
+        \cf10 p1\cf5 [\cf9 0\cf5 ] = \cf10 p0\cf5 [\cf9 0\cf5 ] + (\cf9 4\cf5  + \cf9 8\cf5  * ((\cf10 powerValue\cf5 ) / \cf9 63\cf5 ));\
+        \cf10 p1\cf5 [\cf9 1\cf5 ] = shiftYUP + \cf9 0.75\cf5  * (\cf10 p3\cf5 [\cf9 0\cf5 ] - \cf10 p0\cf5 [\cf9 0\cf5 ]);\
+    \}\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 powerUP\cf5 () \{\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 turn\cf5  % \cf9 2\cf5  == \cf9 0\cf5 ) \cf10 powerBar1\cf5  += \cf9 3\cf5 ;\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \cf10 powerBar2\cf5  += \cf9 3\cf5 ;\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 mouseListener\cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  button, 
+\f1\b \cf7 int
+\f0\b0 \cf5  state, 
+\f1\b \cf7 int
+\f0\b0 \cf5  x, 
+\f1\b \cf7 int
+\f0\b0 \cf5  y)\
+\{\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (button == \cf12 GLUT_LEFT_BUTTON\cf5  && state == \cf12 GLUT_DOWN\cf5 )\
+    \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (!\cf10 inProcess\cf5 )\
+        \{\
+            \cf13 powerUP\cf5 ();\
+            \cf10 mouseCliked\cf5  = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+        \}\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5 \
+    \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (button == \cf12 GLUT_LEFT_BUTTON\cf5  && state == \cf12 GLUT_UP\cf5 )\
+        \{\
+            
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 mouseCliked\cf5 )\
+            \{\
+                \cf10 mouseReleased\cf5  = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                \cf10 mouseCliked\cf5  = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+                
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 turn\cf5  % \cf9 2\cf5  == \cf9 0\cf5 )\
+                \{\
+                    \cf10 powerValue\cf5  = \cf10 powerBar1\cf5 ;\
+\
+                    \cf10 powerBar1\cf5  = \cf9 0\cf5 ;\
+                \}\
+                
+\f1\b \cf7 else
+\f0\b0 \cf5 \
+                \{\
+                    \cf10 powerValue\cf5  = \cf10 powerBar2\cf5 ;\
+                    \cf10 powerBar2\cf5  = \cf9 0\cf5 ;\
+                \}\
+\
+                \cf10 turn\cf5 ++;\
+                \cf13 convertor\cf5 ();\
+                \cf10 inProcess\cf5  = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+\
+            \}\
+        \}\
+\
+    \}\
+\
+    \cf11 glutPostRedisplay\cf5 ();\
+\}\
+
+\f1\b \cf7 int
+\f0\b0 \cf5 * \cf8 bezier\cf5 (
+\f1\b \cf7 float
+\f0\b0 \cf5  t, 
+\f1\b \cf7 int
+\f0\b0 \cf5 * p0, 
+\f1\b \cf7 int
+\f0\b0 \cf5 * p1, 
+\f1\b \cf7 int
+\f0\b0 \cf5 * p2, 
+\f1\b \cf7 int
+\f0\b0 \cf5 * p3)\
+\{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  res[\cf9 2\cf5 ];\
+    res[\cf9 0\cf5 ] = \cf11 pow\cf5 ((\cf9 1\cf5  - t), \cf9 3\cf5 ) * p0[\cf9 0\cf5 ] + \cf9 3\cf5  * t * \cf11 pow\cf5 ((\cf9 1\cf5  - t), \cf9 2\cf5 ) * p1[\cf9 0\cf5 ] + \cf9 3\cf5  * \cf11 pow\cf5 (t, \cf9 2\cf5 ) * (\cf9 1\cf5  - t) * p2[\cf9 0\cf5 ] + \cf11 pow\cf5 (t, \cf9 3\cf5 ) * p3[\cf9 0\cf5 ];\
+    res[\cf9 1\cf5 ] = \cf11 pow\cf5 ((\cf9 1\cf5  - t), \cf9 3\cf5 ) * p0[\cf9 1\cf5 ] + \cf9 3\cf5  * t * \cf11 pow\cf5 ((\cf9 1\cf5  - t), \cf9 2\cf5 ) * p1[\cf9 1\cf5 ] + \cf9 3\cf5  * \cf11 pow\cf5 (t, \cf9 2\cf5 ) * (\cf9 1\cf5  - t) * p2[\cf9 1\cf5 ] + \cf11 pow\cf5 (t, \cf9 3\cf5 ) * p3[\cf9 1\cf5 ];\
+    
+\f1\b \cf7 return
+\f0\b0 \cf5  res;\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 Anim\cf5 ()\
+\{\
+    \
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (start)\{\
+    translateMoon+=\cf9 .3\cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (translateMoon<\cf9 1\cf5  && translateMoon>-\cf9 1\cf5 )\
+            start=
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (translateMoon>\cf9 900\cf5 )\
+        translateMoon=-\cf9 300\cf5 ;\
+       \
+        \
+    \}
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+        translateMoon1++;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (translateMoon1==\cf9 200\cf5 )\{\
+            start=
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+            translateMoon1=\cf9 0\cf5 ;\
+        \}\
+    \}\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (!gameOver) \{\
+        \
+        xDaynamic++;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (xDaynamic%\cf9 30\cf5 ==\cf9 0\cf5 )\
+            d++;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (inProcess)\
+        \{\
+            
+\f1\b \cf7 int
+\f0\b0 \cf5  XWallMin=\cf9 565\cf5 ;\
+             
+\f1\b \cf7 int
+\f0\b0 \cf5  XWallMax=\cf9 600\cf5 ;\
+             
+\f1\b \cf7 int
+\f0\b0 \cf5  YWallMin=\cf9 0\cf5 ;\
+             
+\f1\b \cf7 int
+\f0\b0 \cf5  YWallMax=\cf9 420\cf5 ;\
+            
+\f1\b \cf7 float
+\f0\b0 \cf5  Xmin = translatioCLoud;\
+            
+\f1\b \cf7 float
+\f0\b0 \cf5  Xmax = \cf9 220\cf5  + translatioCLoud;\
+            
+\f1\b \cf7 float
+\f0\b0 \cf5  Ymin = \cf9 450\cf5 ;\
+            
+\f1\b \cf7 float
+\f0\b0 \cf5  Ymax = \cf9 590\cf5 ;\
+            printf(\cf4 "p0=\{%d ,%d\} p1=\{%d ,%d\} p2=\{%d ,%d\} p3=\{%d ,%d\} ,ballIndex=%d \\n"\cf5 , p0[\cf9 0\cf5 ], p0[\cf9 1\cf5 ], p1[\cf9 0\cf5 ], p1[\cf9 1\cf5 ], p2[\cf9 0\cf5 ], p2[\cf9 1\cf5 ], p3[\cf9 0\cf5 ], p3[\cf9 1\cf5 ], ballIndex);\
+            
+\f1\b \cf7 if
+\f0\b0 \cf5  (ballIndex == -\cf9 1\cf5 ) ballIndex = \cf9 0\cf5 ;\
+            
+\f1\b \cf7 if
+\f0\b0 \cf5  (ballIndex < \cf9 200\cf5 )\
+            \{\
+                
+\f1\b \cf7 if
+\f0\b0 \cf5  (turn % \cf9 2\cf5  == \cf9 1\cf5 ) \{\
+                    
+\f1\b \cf7 float
+\f0\b0 \cf5     t = ((
+\f1\b \cf7 float
+\f0\b0 \cf5 )ballIndex) / \cf9 200\cf5 ;\
+                    
+\f1\b \cf7 int
+\f0\b0 \cf5 * p = bezier(t, p0, p1, p2, p3);\
+                    ballPos[\cf9 0\cf5 ] = p[\cf9 0\cf5 ];\
+                    ballPos[\cf9 1\cf5 ] = p[\cf9 1\cf5 ];\
+         \
+                    
+\f1\b \cf7 if
+\f0\b0 \cf5  (!isHit && ballPos[\cf9 0\cf5 ] >= \cf9 960\cf5  && ballPos[\cf9 0\cf5 ] <= \cf9 1070\cf5  && ballPos[\cf9 1\cf5 ] >= \cf9 50\cf5  && ballPos[\cf9 1\cf5 ] <= \cf9 200\cf5 ) \{\
+                        isHit = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                        healthbar2--;\
+                    \}\
+                    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 == \cf9 0\cf5 )  gameOver = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                \}\
+                
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+                    
+\f1\b \cf7 float
+\f0\b0 \cf5     t = \cf9 1\cf5  - ((
+\f1\b \cf7 float
+\f0\b0 \cf5 )ballIndex) / \cf9 150\cf5 ;\
+                    
+\f1\b \cf7 int
+\f0\b0 \cf5 * p = bezier(t, p0, p1, p2, p3);\
+                    ballPos[\cf9 0\cf5 ] = p[\cf9 0\cf5 ];\
+                    ballPos[\cf9 1\cf5 ] = p[\cf9 1\cf5 ];\
+                    \
+                    
+\f1\b \cf7 if
+\f0\b0 \cf5  (!isHit && ballPos[\cf9 0\cf5 ] >= \cf9 70\cf5  && ballPos[\cf9 0\cf5 ] <= \cf9 180\cf5  && ballPos[\cf9 1\cf5 ] >= \cf9 50\cf5  && ballPos[\cf9 1\cf5 ] <= \cf9 200\cf5 ) \{\
+                        isHit = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                        healthbar1--;\
+                    \}\
+                    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar1 == \cf9 0\cf5 ) gameOver=
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                \}\
+\
+                
+\f1\b \cf7 if
+\f0\b0 \cf5  (ballPos[\cf9 0\cf5 ] >= Xmin && ballPos[\cf9 0\cf5 ] <= Xmax && ballPos[\cf9 1\cf5 ] >= Ymin && ballPos[\cf9 1\cf5 ] <= Ymax) \{\
+                    isDefended = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                    ballIndex = \cf9 400\cf5 ;\
+                    ballPos[\cf9 0\cf5 ]=-\cf9 1000\cf5 ;\
+                    ballPos[\cf9 1\cf5 ]=-\cf9 1000\cf5 ;\
+                \}\
+                
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+                
+\f1\b \cf7 if
+\f0\b0 \cf5  (ballPos[\cf9 0\cf5 ] >= XWallMin && ballPos[\cf9 0\cf5 ] <= XWallMax && ballPos[\cf9 1\cf5 ] >= YWallMin && ballPos[\cf9 1\cf5 ] <= YWallMax) \{\
+                    isWallHitted = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+                    ballIndex = \cf9 400\cf5 ;\
+                    WallHitPos[\cf9 0\cf5 ]=ballPos[\cf9 0\cf5 ];\
+                    WallHitPos[\cf9 1\cf5 ]=ballPos[\cf9 1\cf5 ];\
+                    ballPos[\cf9 0\cf5 ]=-\cf9 1000\cf5 ;\
+                    ballPos[\cf9 1\cf5 ]=-\cf9 1000\cf5 ;\
+                \}\
+                \}\
+                ballIndex++;\
+                
+\f1\b \cf7 if
+\f0\b0 \cf5  (ballIndex == \cf9 150\cf5 ) \{\
+                    ballPos[\cf9 0\cf5 ]=-\cf9 1000\cf5 ;\
+                    ballPos[\cf9 1\cf5 ]=-\cf9 1000\cf5 ;\
+                inProcess = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+                ballIndex = -\cf9 1\cf5 ;\
+                isHit = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+\
+                \}\
+            \}\
+            
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+                ballIndex = -\cf9 1\cf5 ;\
+                inProcess = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+                isHit = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+\
+            \}\
+        \}\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (mouseCliked) powerUP();\
+\
+        translatioCLoud += \cf9 0.5\cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (translatioCLoud > \cf9 1300\cf5 ) translatioCLoud = -\cf9 300\cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (xTransfer > \cf9 10\cf5 ) isReached = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (xTransfer < -\cf9 10\cf5 ) isReached = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (!isReached) xTransfer += \cf9 .0001\cf5 ;\
+        
+\f1\b \cf7 else
+\f0\b0 \cf5  xTransfer -= \cf9 .0001\cf5 ;\
+\
+            \
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (xTransfer > \cf9 10\cf5 ) isReached = 
+\f1\b \cf7 true
+\f0\b0 \cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (xTransfer < -\cf9 10\cf5 ) isReached = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (!isReached) xTransfer += \cf9 .5\cf5 ;\
+        
+\f1\b \cf7 else
+\f0\b0 \cf5  xTransfer -= \cf9 .5\cf5 ;\
+        \cf6 //change\cf5 \
+        colorStatusColor += \cf9 0.004\cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (colorStatusColor >= \cf9 1\cf5 ) \{\
+            colorStatusColor = \cf9 0\cf5 ;\
+            isDefended = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+        \}\
+        \cf6 //change\cf5 \
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (isWallHitted)\
+        wallHitTime += \cf9 0.08\cf5 ;\
+               
+\f1\b \cf7 if
+\f0\b0 \cf5  (wallHitTime >= \cf9 1\cf5 ) \{\
+                   printf(\cf4 "Here=\{%d ,%d\}"\cf5 ,WallHitPos[\cf9 0\cf5 ],WallHitPos[\cf9 1\cf5 ]);\
+                   wallHitTime = \cf9 0\cf5 ;\
+                  isWallHitted = 
+\f1\b \cf7 false
+\f0\b0 \cf5 ;\
+               \}\
+    \}\
+    glutPostRedisplay();\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawPowerBar\cf5 (
+\f1\b \cf7 bool
+\f0\b0 \cf5  direction) \{\
+\
+    \cf11 glPushMatrix\cf5 ();\
+    glScalef(\cf9 .9\cf5 , \cf9 .8\cf5 , \cf9 1\cf5 );\
+    glTranslatef(\cf9 1150\cf5 , -\cf9 480\cf5 , \cf9 0\cf5 );\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (direction) \{\
+        glTranslatef(-\cf9 130\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        glTranslatef(-\cf9 900\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glScalef(-\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    \}\
+\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar2 > \cf9 0\cf5  && direction) \{\
+        glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        glBegin(GL_TRIANGLES);\
+        glVertex3f(\cf9 125.43\cf5 , windowYSize - \cf9 59.65\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 204.27\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 112.59\cf5 , windowYSize - \cf9 19.41\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar1 > \cf9 0\cf5  && !direction) \{\
+            glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+            glBegin(GL_TRIANGLES);\
+            glVertex3f(\cf9 125.43\cf5 , windowYSize - \cf9 59.65\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 204.27\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 112.59\cf5 , windowYSize - \cf9 19.41\cf5 , \cf9 0\cf5 );\
+            glEnd();\
+        \}\
+    \}\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar2 > \cf9 300\cf5  && direction) \{\
+        glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        glBegin(GL_POLYGON);\
+        glVertex3f(\cf9 125.43\cf5 , windowYSize - \cf9 59.65\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 112.59\cf5 , windowYSize - \cf9 19.41\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 99.57\cf5 , windowYSize - \cf9 48.64\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 109.75\cf5 , windowYSize - \cf9 95.52\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar1 > \cf9 300\cf5  && !direction) \{\
+            glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+            glBegin(GL_POLYGON);\
+            glVertex3f(\cf9 125.43\cf5 , windowYSize - \cf9 59.65\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 112.59\cf5 , windowYSize - \cf9 19.41\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 99.57\cf5 , windowYSize - \cf9 48.64\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 109.75\cf5 , windowYSize - \cf9 95.52\cf5 , \cf9 0\cf5 );\
+            glEnd();\
+        \}\
+    \}\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar2 > \cf9 500\cf5  && direction) \{\
+        glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        glBegin(GL_POLYGON);\
+        glVertex3f(\cf9 99.57\cf5 , windowYSize - \cf9 48.64\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 109.75\cf5 , windowYSize - \cf9 95.52\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 81.38\cf5 , windowYSize - \cf9 61.65\cf5 , \cf9 0\cf5 );\
+\
+        glVertex3f(\cf9 67.61\cf5 , windowYSize - \cf9 21.27\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar1 > \cf9 500\cf5  && !direction) \{\
+            glBegin(GL_POLYGON);\
+            glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+            glVertex3f(\cf9 99.57\cf5 , windowYSize - \cf9 48.64\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 109.75\cf5 , windowYSize - \cf9 95.52\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 81.38\cf5 , windowYSize - \cf9 61.65\cf5 , \cf9 0\cf5 );\
+\
+            glVertex3f(\cf9 67.61\cf5 , windowYSize - \cf9 21.27\cf5 , \cf9 0\cf5 );\
+            glEnd();\
+        \}\
+    \}\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar2 > \cf9 700\cf5  && direction) \{\
+        glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        glBegin(GL_POLYGON);\
+        glVertex3f(\cf9 81.38\cf5 , windowYSize - \cf9 61.65\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 67.61\cf5 , windowYSize - \cf9 21.27\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 55.98\cf5 , windowYSize - \cf9 51.64\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 70.66\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar1 > \cf9 700\cf5  && !direction) \{\
+            glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+            glBegin(GL_POLYGON);\
+            glVertex3f(\cf9 81.38\cf5 , windowYSize - \cf9 61.65\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 67.61\cf5 , windowYSize - \cf9 21.27\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 55.98\cf5 , windowYSize - \cf9 51.64\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 70.66\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+            glEnd();\
+        \}\
+    \}\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar2 > \cf9 950\cf5  && direction) \{\
+        glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        glBegin(GL_TRIANGLES);\
+        glVertex3f(\cf9 5.05\cf5 , windowYSize - \cf9 12\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 70.66\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 55.98\cf5 , windowYSize - \cf9 51.64\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (powerBar1 > \cf9 950\cf5  && !direction) \{\
+            glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+            glBegin(GL_TRIANGLES);\
+            glVertex3f(\cf9 5.05\cf5 , windowYSize - \cf9 12\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 70.66\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+            glVertex3f(\cf9 55.98\cf5 , windowYSize - \cf9 51.64\cf5 , \cf9 0\cf5 );\
+            glEnd();\
+        \}\
+    \}\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glBegin(GL_LINE_LOOP);\
+\
+    glVertex3f(\cf9 5.05\cf5 , windowYSize - \cf9 12\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 70.66\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 81.38\cf5 , windowYSize - \cf9 61.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 109.75\cf5 , windowYSize - \cf9 95.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.43\cf5 , windowYSize - \cf9 59.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 204.27\cf5 , windowYSize - \cf9 96.82\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 112.59\cf5 , windowYSize - \cf9 19.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 99.57\cf5 , windowYSize - \cf9 48.64\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 67.61\cf5 , windowYSize - \cf9 21.27\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 55.98\cf5 , windowYSize - \cf9 51.64\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glPopMatrix();\
+\
+    \cf6 //\cf5 \
+\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawCloud\cf5 (
+\f1\b \cf7 bool
+\f0\b0 \cf5  status ,
+\f1\b \cf7 bool
+\f0\b0 \cf5  s2) \{\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (status)\{\
+        
+\f1\b \cf7 float
+\f0\b0 \cf5  cloudColor = \cf9 1\cf5 ;\
+          
+\f1\b \cf7 if
+\f0\b0 \cf5 (isDefended&& turn%\cf9 2\cf5 ==\cf9 0\cf5 )\{\
+             \
+              
+\f1\b \cf7 float
+\f0\b0 \cf5  rg=\cf9 1\cf5 -(\cf9 0.342\cf5 )*colorStatusColor;\
+               
+\f1\b \cf7 float
+\f0\b0 \cf5  b=\cf9 1\cf5 -(\cf9 0.33\cf5 )*colorStatusColor;\
+              glColor3f(rg , rg, b);\
+              \cf6 //printf("%1.2f %1.4f", rg , b);\cf5 \
+          \}\
+          
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+              
+\f1\b \cf7 if
+\f0\b0 \cf5  (isDefended && turn % \cf9 2\cf5  == \cf9 1\cf5 )\{\
+                  \
+                  
+\f1\b \cf7 float
+\f0\b0 \cf5  r=\cf9 1\cf5 -(\cf9 0.851\cf5 )*colorStatusColor;\
+                  
+\f1\b \cf7 float
+\f0\b0 \cf5  g=\cf9 1\cf5 -(\cf9 0.325\cf5 )*colorStatusColor;\
+                  printf(\cf4 "color =%1.4f %1.4f %1.4f \\n "\cf5 , r , g, colorStatusColor);\
+                  glColor3f(r, g, \cf9 1\cf5 );\
+              \}\
+              
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(cloudColor, cloudColor, cloudColor);\
+\
+          \}\
+          \cf6 //glLineWidth(15);\cf5 \
+          glPushMatrix();\
+          \
+          glTranslatef(translatioCLoud, -\cf9 300\cf5 , \cf9 0\cf5 );\
+          glBegin(GL_POLYGON);\
+\
+          glVertex3f(\cf9 35.79\cf5 , windowYSize - \cf9 58.27\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 42.21\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 49.1\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 57.02\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 68.37\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 79.84\cf5 , windowYSize - \cf9 31.2\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 83.51\cf5 , windowYSize - \cf9 26.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 95.44\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 9.6\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 140.07\cf5 , windowYSize - \cf9 10.27\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 150.14\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 159.69\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 175.13\cf5 , windowYSize - \cf9 29.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 180.49\cf5 , windowYSize - \cf9 36.98\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 186.4\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 188.06\cf5 , windowYSize - \cf9 60.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 203.92\cf5 , windowYSize - \cf9 67.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.78\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 220.62\cf5 , windowYSize - \cf9 99.07\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.46\cf5 , windowYSize - \cf9 111.05\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 214.94\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 207.45\cf5 , windowYSize - \cf9 129.59\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 195.99\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 177.63\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 169.92\cf5 , windowYSize - \cf9 142.62\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 158.69\cf5 , windowYSize - \cf9 146.4\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 146.8\cf5 , windowYSize - \cf9 147.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 132.98\cf5 , windowYSize - \cf9 143.06\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 126.21\cf5 , windowYSize - \cf9 149.73\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 89.93\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+\
+\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 63.89\cf5 , windowYSize - \cf9 147.32\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 53.69\cf5 , windowYSize - \cf9 139.55\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 44.5\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 31.5\cf5 , windowYSize - \cf9 135.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 111.96\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 103.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 91.31\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 71.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 26.98\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 33.49\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glEnd();\
+          
+\f1\b \cf7 if
+\f0\b0 \cf5  (isDefended)\{\
+              
+\f1\b \cf7 float
+\f0\b0 \cf5  gray=\cf9 1\cf5 -colorStatusColor;\
+              glColor3f(gray,gray, gray);\
+          \}    
+\f1\b \cf7 else
+\f0\b0 \cf5 \
+               glColor3f(cloudColor, cloudColor, cloudColor);\
+\
+          \
+          glBegin(GL_LINE_LOOP);\
+\
+          glVertex3f(\cf9 35.79\cf5 , windowYSize - \cf9 58.27\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 42.21\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 49.1\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 57.02\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 68.37\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 79.84\cf5 , windowYSize - \cf9 31.2\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 83.51\cf5 , windowYSize - \cf9 26.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 95.44\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 9.6\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 140.07\cf5 , windowYSize - \cf9 10.27\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 150.14\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 159.69\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 175.13\cf5 , windowYSize - \cf9 29.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 180.49\cf5 , windowYSize - \cf9 36.98\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 186.4\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 188.06\cf5 , windowYSize - \cf9 60.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 203.92\cf5 , windowYSize - \cf9 67.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.78\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 220.62\cf5 , windowYSize - \cf9 99.07\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.46\cf5 , windowYSize - \cf9 111.05\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 214.94\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 207.45\cf5 , windowYSize - \cf9 129.59\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 195.99\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 177.63\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 169.92\cf5 , windowYSize - \cf9 142.62\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 158.69\cf5 , windowYSize - \cf9 146.4\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 146.8\cf5 , windowYSize - \cf9 147.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 132.98\cf5 , windowYSize - \cf9 143.06\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 126.21\cf5 , windowYSize - \cf9 149.73\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 89.93\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+\
+\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 63.89\cf5 , windowYSize - \cf9 147.32\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 53.69\cf5 , windowYSize - \cf9 139.55\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 44.5\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 31.5\cf5 , windowYSize - \cf9 135.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 111.96\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 103.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 91.31\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 71.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 26.98\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 33.49\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glEnd();\
+          glPopMatrix();\
+    \}
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+        
+\f1\b \cf7 float
+\f0\b0 \cf5  cloudColor = \cf9 1\cf5 ;\
+         \
+        glColor3f(cloudColor, cloudColor, cloudColor);\
+\
+         \
+          \cf6 //glLineWidth(15);\cf5 \
+          glPushMatrix();\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (s2)\{\
+            glScalef(\cf9 2\cf5 , \cf9 2\cf5 , \cf9 1\cf5 );\
+            glTranslatef(\cf9 0\cf5 , -\cf9 450\cf5 , \cf9 0\cf5 );\
+        \}
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+            glScalef(\cf9 2\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+            glTranslatef(\cf9 300\cf5 , -\cf9 150\cf5 , \cf9 0\cf5 );\
+        \}\
+        \
+            \
+          glBegin(GL_POLYGON);\
+\
+          glVertex3f(\cf9 35.79\cf5 , windowYSize - \cf9 58.27\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 42.21\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 49.1\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 57.02\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 68.37\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 79.84\cf5 , windowYSize - \cf9 31.2\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 83.51\cf5 , windowYSize - \cf9 26.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 95.44\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 9.6\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 140.07\cf5 , windowYSize - \cf9 10.27\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 150.14\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 159.69\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 175.13\cf5 , windowYSize - \cf9 29.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 180.49\cf5 , windowYSize - \cf9 36.98\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 186.4\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 188.06\cf5 , windowYSize - \cf9 60.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 203.92\cf5 , windowYSize - \cf9 67.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.78\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 220.62\cf5 , windowYSize - \cf9 99.07\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.46\cf5 , windowYSize - \cf9 111.05\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 214.94\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 207.45\cf5 , windowYSize - \cf9 129.59\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 195.99\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 177.63\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 169.92\cf5 , windowYSize - \cf9 142.62\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 158.69\cf5 , windowYSize - \cf9 146.4\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 146.8\cf5 , windowYSize - \cf9 147.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 132.98\cf5 , windowYSize - \cf9 143.06\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 126.21\cf5 , windowYSize - \cf9 149.73\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 89.93\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+\
+\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 63.89\cf5 , windowYSize - \cf9 147.32\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 53.69\cf5 , windowYSize - \cf9 139.55\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 44.5\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 31.5\cf5 , windowYSize - \cf9 135.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 111.96\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 103.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 91.31\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 71.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 26.98\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 33.49\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glEnd();\
+        \
+        glColor3f(cloudColor, cloudColor, cloudColor);\
+\
+          \
+          glBegin(GL_LINE_LOOP);\
+\
+          glVertex3f(\cf9 35.79\cf5 , windowYSize - \cf9 58.27\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 42.21\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 49.1\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 57.02\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 68.37\cf5 , windowYSize - \cf9 36.47\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 39.81\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 79.84\cf5 , windowYSize - \cf9 31.2\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 83.51\cf5 , windowYSize - \cf9 26.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 95.44\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 9.6\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 140.07\cf5 , windowYSize - \cf9 10.27\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 150.14\cf5 , windowYSize - \cf9 12.94\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 159.69\cf5 , windowYSize - \cf9 17.36\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 175.13\cf5 , windowYSize - \cf9 29.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 180.49\cf5 , windowYSize - \cf9 36.98\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 186.4\cf5 , windowYSize - \cf9 45.52\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 188.06\cf5 , windowYSize - \cf9 60.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 203.92\cf5 , windowYSize - \cf9 67.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.78\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 220.62\cf5 , windowYSize - \cf9 99.07\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 217.46\cf5 , windowYSize - \cf9 111.05\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 214.94\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 207.45\cf5 , windowYSize - \cf9 129.59\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 195.99\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 177.63\cf5 , windowYSize - \cf9 134.54\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 169.92\cf5 , windowYSize - \cf9 142.62\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 158.69\cf5 , windowYSize - \cf9 146.4\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 146.8\cf5 , windowYSize - \cf9 147.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 132.98\cf5 , windowYSize - \cf9 143.06\cf5 , \cf9 0\cf5 );\
+\
+          glVertex3f(\cf9 126.21\cf5 , windowYSize - \cf9 149.73\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 119.79\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 105.43\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 89.93\cf5 , windowYSize - \cf9 156.46\cf5 , \cf9 0\cf5 );\
+\
+\
+          glVertex3f(\cf9 77.89\cf5 , windowYSize - \cf9 153.24\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 63.89\cf5 , windowYSize - \cf9 147.32\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 53.69\cf5 , windowYSize - \cf9 139.55\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 44.5\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 31.5\cf5 , windowYSize - \cf9 135.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 132.04\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 120.61\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 111.96\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 103.66\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 2.77\cf5 , windowYSize - \cf9 91.31\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 6.53\cf5 , windowYSize - \cf9 83.21\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 20.3\cf5 , windowYSize - \cf9 71.53\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 26.98\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 33.49\cf5 , windowYSize - \cf9 69.44\cf5 , \cf9 0\cf5 );\
+          glEnd();\
+          glPopMatrix();\
+    \}\
+  \
+\}\
+\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawHeart\cf5 (
+\f1\b \cf7 float
+\f0\b0 \cf5  x, 
+\f1\b \cf7 float
+\f0\b0 \cf5  y, 
+\f1\b \cf7 float
+\f0\b0 \cf5  r, 
+\f1\b \cf7 float
+\f0\b0 \cf5  g, 
+\f1\b \cf7 float
+\f0\b0 \cf5  b) \{\
+    \cf11 glColor3f\cf5 (r, g, b);\
+    \cf13 drawCircle\cf5 (\cf9 10\cf5 , x, y);\
+    \cf13 drawCircle\cf5 (\cf9 10\cf5 , (x + \cf9 12\cf5 ), y);\
+    \cf11 glBegin\cf5 (\cf12 GL_TRIANGLES\cf5 );\
+    \cf11 glVertex3f\cf5 (x - \cf9 11\cf5 , \cf10 windowYSize\cf5  - (y + \cf9 2\cf5 ), \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (x + \cf9 23\cf5 , \cf10 windowYSize\cf5  - (y + \cf9 2\cf5 ), \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (x + \cf9 6\cf5 , \cf10 windowYSize\cf5  - (y + \cf9 23\cf5 ), \cf9 0\cf5 );\
+    \cf11 glEnd\cf5 ();\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawHealthBar\cf5 () \{\
+    \
+    \cf6 //draw health background\cf5 \
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (healthbar1==\cf9 5\cf5 ) drawHeart(\cf9 250\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(\cf9 250\cf5 , \cf9 50\cf5 , \cf9 .5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar1 >= \cf9 4\cf5 ) drawHeart(\cf9 200\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(\cf9 200\cf5 , \cf9 50\cf5 ,\cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar1 >= \cf9 3\cf5 ) drawHeart(\cf9 150\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(\cf9 150\cf5 , \cf9 50\cf5 ,\cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar1 >= \cf9 2\cf5 ) drawHeart(\cf9 100\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(\cf9 100\cf5 , \cf9 50\cf5 ,\cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar1 >= \cf9 1\cf5 ) drawHeart(\cf9 50\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(\cf9 50\cf5 , \cf9 50\cf5 ,\cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 == \cf9 5\cf5 ) drawHeart(windowXSize - \cf9 250\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(windowXSize - \cf9 250\cf5 , \cf9 50\cf5 , \cf9 .5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 >= \cf9 4\cf5 ) drawHeart(windowXSize - \cf9 200\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(windowXSize - \cf9 200\cf5 , \cf9 50\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 >= \cf9 3\cf5 ) drawHeart(windowXSize - \cf9 150\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(windowXSize - \cf9 150\cf5 , \cf9 50\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 >= \cf9 2\cf5 ) drawHeart(windowXSize - \cf9 100\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(windowXSize - \cf9 100\cf5 , \cf9 50\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (healthbar2 >= \cf9 1\cf5 ) drawHeart(windowXSize - \cf9 50\cf5 , \cf9 50\cf5 , \cf9 1\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  drawHeart(windowXSize - \cf9 50\cf5 , \cf9 50\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 , \cf9 0.5\cf5 );\
+\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawPicakSafe\cf5 (
+\f1\b \cf7 bool
+\f0\b0 \cf5  right) \{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  swapy = \cf9 900\cf5 ;\
+    glPushMatrix();\
+    glLineWidth(\cf9 5\cf5 );\
+    glScalef(scaling, scaling, \cf9 1\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glTranslatef(\cf9 1000\cf5  , transationPLayer2Y + xTransfer, \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glTranslatef(transationPLayer2X , transationPLayer2Y + xTransfer, \cf9 0\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (isHit ) glTranslatef(\cf9 0\cf5  , \cf9 300\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glScalef(-\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    \cf6 // RIGHT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 224\cf5 , swapy - \cf9 280\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184\cf5 , swapy - \cf9 208\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 152\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 109.14\cf5 , swapy - \cf9 128.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 81.27\cf5 , swapy - \cf9 108.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 48\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 0\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 24\cf5 , swapy - \cf9 120\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 64\cf5 , swapy - \cf9 216\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 96\cf5 , swapy - \cf9 248\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 160\cf5 , swapy - \cf9 328\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 224\cf5 , swapy - \cf9 280\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184\cf5 , swapy - \cf9 208\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 152\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 109.14\cf5 , swapy - \cf9 128.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 81.27\cf5 , swapy - \cf9 108.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 48\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 0\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 24\cf5 , swapy - \cf9 120\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 64\cf5 , swapy - \cf9 216\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 96\cf5 , swapy - \cf9 248\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 160\cf5 , swapy - \cf9 328\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 152\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 120\cf5 , swapy - \cf9 136\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 109.14\cf5 , swapy - \cf9 128.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 81.27\cf5 , swapy - \cf9 108.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 48\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 0\cf5 , swapy - \cf9 96\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 24\cf5 , swapy - \cf9 120\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 64\cf5 , swapy - \cf9 216\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 80\cf5 , swapy - \cf9 232\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 80\cf5 , swapy - \cf9 120\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // LEFT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+\
+    glVertex3f(\cf9 438.34\cf5 , swapy - \cf9 284.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 507.94\cf5 , swapy - \cf9 171.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 570.85\cf5 , swapy - \cf9 111.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 639.12\cf5 , swapy - \cf9 48.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 708.72\cf5 , swapy - \cf9 17.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 695.34\cf5 , swapy - \cf9 80.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 649.83\cf5 , swapy - \cf9 171.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 560.14\cf5 , swapy - \cf9 284.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 498.57\cf5 , swapy - \cf9 348.39\cf5 , \cf9 0\cf5 );\
+    \cf6 //glVertex3f(186.07, swapy - 286.93, 0);\cf5 \
+    glEnd();\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 438.34\cf5 , swapy - \cf9 284.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 507.94\cf5 , swapy - \cf9 171.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 570.85\cf5 , swapy - \cf9 111.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 639.12\cf5 , swapy - \cf9 48.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 708.72\cf5 , swapy - \cf9 17.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 695.34\cf5 , swapy - \cf9 80.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 649.83\cf5 , swapy - \cf9 171.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 560.14\cf5 , swapy - \cf9 284.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 498.57\cf5 , swapy - \cf9 348.39\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 570.85\cf5 , swapy - \cf9 111.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 639.12\cf5 , swapy - \cf9 48.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 708.72\cf5 , swapy - \cf9 17.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 695.34\cf5 , swapy - \cf9 80.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 649.83\cf5 , swapy - \cf9 171.71\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 605.86\cf5 , swapy - \cf9 228.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 616.36\cf5 , swapy - \cf9 207.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 628.41\cf5 , swapy - \cf9 185.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 628.41\cf5 , swapy - \cf9 126.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 616.36\cf5 , swapy - \cf9 80.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 601.64\cf5 , swapy - \cf9 87.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.36\cf5 , swapy - \cf9 97.26\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 // TAIL\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.988\cf5 , \cf9 0.8627\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 568.37\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 499.34\cf5 , swapy - \cf9 462.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 563.59\cf5 , swapy - \cf9 393.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.67\cf5 , swapy - \cf9 281.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 866.09\cf5 , swapy - \cf9 411.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+    glBegin(GL_POLYGON);\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 837.98\cf5 , swapy - \cf9 611.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.29\cf5 , swapy - \cf9 704.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    glBegin(GL_POLYGON);\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 801.84\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+\
+    \cf6 // END OF THE TAIL\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+\
+    glVertex3f(\cf9 644.91\cf5 , swapy - \cf9 784\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 640\cf5 , swapy - \cf9 806.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 663.96\cf5 , swapy - \cf9 795.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 656.61\cf5 , swapy - \cf9 814.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 679.28\cf5 , swapy - \cf9 808.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.44\cf5 , swapy - \cf9 824.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 696\cf5 , swapy - \cf9 816\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //glLineWidth(13);\cf5 \
+\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 644.91\cf5 , swapy - \cf9 784\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 640\cf5 , swapy - \cf9 806.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 663.96\cf5 , swapy - \cf9 795.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 656.61\cf5 , swapy - \cf9 814.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 679.28\cf5 , swapy - \cf9 808.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.44\cf5 , swapy - \cf9 824.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 696\cf5 , swapy - \cf9 816\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 499.34\cf5 , swapy - \cf9 462.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 563.59\cf5 , swapy - \cf9 393.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.67\cf5 , swapy - \cf9 281.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 866.09\cf5 , swapy - \cf9 411.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 837.98\cf5 , swapy - \cf9 611.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 801.84\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.29\cf5 , swapy - \cf9 704.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 568.37\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //\cf5 \
+\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 162.07\cf5 , swapy - \cf9 533.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 181.43\cf5 , swapy - \cf9 512.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 193.29\cf5 , swapy - \cf9 507.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.78\cf5 , swapy - \cf9 507.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.26\cf5 , swapy - \cf9 519.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 262.6\cf5 , swapy - \cf9 540.72\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // BODY\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 179.09\cf5 , swapy - \cf9 620.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.48\cf5 , swapy - \cf9 578.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.03\cf5 , swapy - \cf9 546.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 94.34\cf5 , swapy - \cf9 499.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 107.72\cf5 , swapy - \cf9 459.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 123.78\cf5 , swapy - \cf9 423.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.48\cf5 , swapy - \cf9 376.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 162.6\cf5 , swapy - \cf9 330.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 176\cf5 , swapy - \cf9 312\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 208\cf5 , swapy - \cf9 288\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.15\cf5 , swapy - \cf9 285.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 310.83\cf5 , swapy - \cf9 257.37\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 394.03\cf5 , swapy - \cf9 257.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.37\cf5 , swapy - \cf9 273.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 472\cf5 , swapy - \cf9 296\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 496\cf5 , swapy - \cf9 320\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 512\cf5 , swapy - \cf9 344\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 511.96\cf5 , swapy - \cf9 341.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 529.67\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537.9\cf5 , swapy - \cf9 413.36\cf5 , \cf9 0\cf5 );\
+\
+    \cf6 //glVertex3f(537.9, swapy - 420.57, 0);\cf5 \
+    glVertex3f(\cf9 537.39\cf5 , swapy - \cf9 422.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 528.6\cf5 , swapy - \cf9 546.2\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 521.43\cf5 , swapy - \cf9 573.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 521.43\cf5 , swapy - \cf9 595.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 526.68\cf5 , swapy - \cf9 617.44\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 566.84\cf5 , swapy - \cf9 697.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 598.96\cf5 , swapy - \cf9 818.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 598.96\cf5 , swapy - \cf9 866.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 592.27\cf5 , swapy - \cf9 925.3\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.81\cf5 , swapy - \cf9 962.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 477.16\cf5 , swapy - \cf9 989.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 336.61\cf5 , swapy - \cf9 974.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 289.76\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 281.73\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 246.93\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 217.48\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 966.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180\cf5 , swapy - \cf9 962.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 142.52\cf5 , swapy - \cf9 910.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 137.17\cf5 , swapy - \cf9 866.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 142.52\cf5 , swapy - \cf9 806.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 161.26\cf5 , swapy - \cf9 729.87\cf5 , \cf9 0\cf5 );\
+    \cf6 //glVertex3f(161.26, swapy - 996.7, 0);\cf5 \
+    glVertex3f(\cf9 177.32\cf5 , swapy - \cf9 622.79\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 179.09\cf5 , swapy - \cf9 620.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.48\cf5 , swapy - \cf9 578.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.03\cf5 , swapy - \cf9 546.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 94.34\cf5 , swapy - \cf9 499.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 107.72\cf5 , swapy - \cf9 459.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 123.78\cf5 , swapy - \cf9 423.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.48\cf5 , swapy - \cf9 376.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 162.6\cf5 , swapy - \cf9 330.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 176\cf5 , swapy - \cf9 312\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 208\cf5 , swapy - \cf9 288\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.15\cf5 , swapy - \cf9 285.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 310.83\cf5 , swapy - \cf9 257.37\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 394.03\cf5 , swapy - \cf9 257.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.37\cf5 , swapy - \cf9 273.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 472\cf5 , swapy - \cf9 296\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 496\cf5 , swapy - \cf9 320\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 512\cf5 , swapy - \cf9 344\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 511.96\cf5 , swapy - \cf9 341.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 529.67\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537.9\cf5 , swapy - \cf9 413.36\cf5 , \cf9 0\cf5 );\
+\
+    \cf6 //glVertex3f(537.9, swapy - 420.57, 0);\cf5 \
+    glVertex3f(\cf9 537.39\cf5 , swapy - \cf9 422.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 528.6\cf5 , swapy - \cf9 546.2\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 521.43\cf5 , swapy - \cf9 573.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 521.43\cf5 , swapy - \cf9 595.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 526.68\cf5 , swapy - \cf9 617.44\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 566.84\cf5 , swapy - \cf9 697.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 598.96\cf5 , swapy - \cf9 818.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 598.96\cf5 , swapy - \cf9 866.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 592.27\cf5 , swapy - \cf9 925.3\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.81\cf5 , swapy - \cf9 962.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 477.16\cf5 , swapy - \cf9 989.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 336.61\cf5 , swapy - \cf9 974.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 289.76\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 281.73\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 246.93\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 217.48\cf5 , swapy - \cf9 981.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 966.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180\cf5 , swapy - \cf9 962.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 142.52\cf5 , swapy - \cf9 910.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 137.17\cf5 , swapy - \cf9 866.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 142.52\cf5 , swapy - \cf9 806.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 161.26\cf5 , swapy - \cf9 729.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 177.32\cf5 , swapy - \cf9 622.79\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+\
+    glLineWidth(\cf9 5\cf5 );\
+\
+\
+\
+    \cf6 //side trianles\cf5 \
+    glBegin(GL_TRIANGLES);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+\
+    glVertex3f(\cf9 594.47\cf5 , swapy - \cf9 785.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 550.26\cf5 , swapy - \cf9 828.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 601.64\cf5 , swapy - \cf9 828.31\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 559.53\cf5 , swapy - \cf9 682.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 532.26\cf5 , swapy - \cf9 696\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 524.52\cf5 , swapy - \cf9 708.72\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 532.26\cf5 , swapy - \cf9 714.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 545.16\cf5 , swapy - \cf9 714.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 568\cf5 , swapy - \cf9 712\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 //NOSE\cf5 \
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) \{\
+        glColor3f(\cf9 0.71\cf5 , \cf9 0.423\cf5 , \cf9 0\cf5 );\
+        glPushMatrix();\
+        \cf6 //glRotatef(90, 1, 0, 0);\cf5 \
+        glBegin(GL_QUADS);\
+\
+        glVertex3f(\cf9 204.16\cf5 , swapy - \cf9 441.75\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 204.16\cf5 , swapy - \cf9 484.11\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 258.58\cf5 , swapy - \cf9 441.75\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 258.58\cf5 , swapy - \cf9 484.11\cf5 , \cf9 0\cf5 );\
+\
+\
+        glEnd();\
+        glPopMatrix();\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glBegin(GL_TRIANGLES);\
+\
+\
+        glVertex3f(\cf9 223.86\cf5 , swapy - \cf9 461.75\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 234.16\cf5 , swapy - \cf9 474.11\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 248.58\cf5 , swapy - \cf9 461.75\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+    \}\
+\
+\
+    \cf6 //NOSE\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 200.08\cf5 , swapy - \cf9 501.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 212.54\cf5 , swapy - \cf9 512.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.98\cf5 , swapy - \cf9 512.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 242.4\cf5 , swapy - \cf9 507.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 264.02\cf5 , swapy - \cf9 512.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 284.61\cf5 , swapy - \cf9 512.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.88\cf5 , swapy - \cf9 501.91\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+    \cf6 // LEGS RIGHT\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.98\cf5 , \cf9 0.832\cf5 , \cf9 0.25\cf5 );\
+    glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 975.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 148.45\cf5 , swapy - \cf9 1008.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1042.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 138.31\cf5 , swapy - \cf9 1056.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.98\cf5 , swapy - \cf9 1059.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 197.41\cf5 , swapy - \cf9 1046.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 232.75\cf5 , swapy - \cf9 1028.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.65\cf5 , swapy - \cf9 1007.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 276.61\cf5 , swapy - \cf9 994.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 975.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 148.45\cf5 , swapy - \cf9 1008.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1042.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 138.31\cf5 , swapy - \cf9 1056.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.98\cf5 , swapy - \cf9 1059.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 197.41\cf5 , swapy - \cf9 1046.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 232.75\cf5 , swapy - \cf9 1028.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.65\cf5 , swapy - \cf9 1007.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 276.61\cf5 , swapy - \cf9 994.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.96\cf5 , swapy - \cf9 1025.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 145.01\cf5 , swapy - \cf9 1053.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.64\cf5 , swapy - \cf9 1022.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.22\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // LEGS LEFT\cf5 \
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.98\cf5 , \cf9 0.832\cf5 , \cf9 0.25\cf5 );\
+    glVertex3f(\cf9 560.52\cf5 , swapy - \cf9 965.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1023.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 578.8\cf5 , swapy - \cf9 1062.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 564.79\cf5 , swapy - \cf9 1089.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.07\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 514.83\cf5 , swapy - \cf9 1055.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 473.4\cf5 , swapy - \cf9 997.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 548.95\cf5 , swapy - \cf9 976.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 559.6\cf5 , swapy - \cf9 966.57\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 560.52\cf5 , swapy - \cf9 965.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1023.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 578.8\cf5 , swapy - \cf9 1062.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 564.79\cf5 , swapy - \cf9 1089.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.07\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 514.83\cf5 , swapy - \cf9 1055.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 473.4\cf5 , swapy - \cf9 997.66\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 532.5\cf5 , swapy - \cf9 1039.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 559.31\cf5 , swapy - \cf9 1086.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 553.82\cf5 , swapy - \cf9 1032.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 572.1\cf5 , swapy - \cf9 1084.18\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 // right red circle\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.976\cf5 , \cf9 0.27\cf5 , \cf9 0.196\cf5 );\
+    glVertex3f(\cf9 104\cf5 , swapy - \cf9 472\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 123.99\cf5 , swapy - \cf9 491.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 129.14\cf5 , swapy - \cf9 510.15\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 536\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 112\cf5 , swapy - \cf9 560\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 113.33\cf5 , swapy - \cf9 559.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.03\cf5 , swapy - \cf9 546.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 94.34\cf5 , swapy - \cf9 499.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 103.15\cf5 , swapy - \cf9 473.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+\
+    glBegin(GL_LINE_LOOP);\
+    \cf6 //glColor3f(0.976, 0.27, 0.196);\cf5 \
+    glVertex3f(\cf9 104\cf5 , swapy - \cf9 472\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 123.99\cf5 , swapy - \cf9 491.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 129.14\cf5 , swapy - \cf9 510.15\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 536\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 112\cf5 , swapy - \cf9 560\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 113.33\cf5 , swapy - \cf9 559.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.03\cf5 , swapy - \cf9 546.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 94.34\cf5 , swapy - \cf9 499.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 103.15\cf5 , swapy - \cf9 473.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // left red circle\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.976\cf5 , \cf9 0.27\cf5 , \cf9 0.196\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 497.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 405.84\cf5 , swapy - \cf9 471.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 428.9\cf5 , swapy - \cf9 461.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 458.55\cf5 , swapy - \cf9 471.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 470.63\cf5 , swapy - \cf9 488.535\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 476.13\cf5 , swapy - \cf9 507.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 470.63\cf5 , swapy - \cf9 526.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 447.57\cf5 , swapy - \cf9 542.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 423.41\cf5 , swapy - \cf9 542.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 405.84\cf5 , swapy - \cf9 533.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.15\cf5 , swapy - \cf9 526.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 517.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 507.06\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 497.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 405.84\cf5 , swapy - \cf9 471.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 428.9\cf5 , swapy - \cf9 461.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 458.55\cf5 , swapy - \cf9 471.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 470.63\cf5 , swapy - \cf9 488.535\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 476.13\cf5 , swapy - \cf9 507.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 470.63\cf5 , swapy - \cf9 526.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 447.57\cf5 , swapy - \cf9 542.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 423.41\cf5 , swapy - \cf9 542.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 405.84\cf5 , swapy - \cf9 533.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.15\cf5 , swapy - \cf9 526.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 517.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.76\cf5 , swapy - \cf9 507.06\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 // EYES OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 380.37\cf5 , swapy - \cf9 377.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.9\cf5 , swapy - \cf9 382.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 414.35\cf5 , swapy - \cf9 395.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 418.47\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 409.2\cf5 , swapy - \cf9 439.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.9\cf5 , swapy - \cf9 451.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 375.22\cf5 , swapy - \cf9 456.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.66\cf5 , swapy - \cf9 451.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.33\cf5 , swapy - \cf9 439.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 339.18\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.33\cf5 , swapy - \cf9 395.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.66\cf5 , swapy - \cf9 382.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 369.04\cf5 , swapy - \cf9 377.53\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 380.37\cf5 , swapy - \cf9 377.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.9\cf5 , swapy - \cf9 382.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 414.35\cf5 , swapy - \cf9 395.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 418.47\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 409.2\cf5 , swapy - \cf9 439.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 398.9\cf5 , swapy - \cf9 451.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 375.22\cf5 , swapy - \cf9 456.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.66\cf5 , swapy - \cf9 451.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.33\cf5 , swapy - \cf9 439.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 339.18\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.33\cf5 , swapy - \cf9 395.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.66\cf5 , swapy - \cf9 382.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 369.04\cf5 , swapy - \cf9 377.53\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // EYES INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 365.11\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.67\cf5 , swapy - \cf9 388.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 384.49\cf5 , swapy - \cf9 400.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 384.49\cf5 , swapy - \cf9 409.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.67\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 365.11\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 351.54\cf5 , swapy - \cf9 414.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 351.54\cf5 , swapy - \cf9 400.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 356.39\cf5 , swapy - \cf9 394.05\cf5 , \cf9 0\cf5 );\
+    \cf6 //glVertex3f(365.11, swapy - 384.53, 0);\cf5 \
+\
+\
+    glEnd();\
+\
+    glLineWidth(\cf9 3\cf5 );\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 365.11\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.67\cf5 , swapy - \cf9 388.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 384.49\cf5 , swapy - \cf9 400.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 384.49\cf5 , swapy - \cf9 409.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.67\cf5 , swapy - \cf9 418.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 365.11\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 351.54\cf5 , swapy - \cf9 414.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 351.54\cf5 , swapy - \cf9 400.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 356.39\cf5 , swapy - \cf9 394.05\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    \cf6 // EYES OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 390.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.15\cf5 , swapy - \cf9 399.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 203.27\cf5 , swapy - \cf9 417.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.15\cf5 , swapy - \cf9 438.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 448.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.38\cf5 , swapy - \cf9 454.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.97\cf5 , swapy - \cf9 448.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.67\cf5 , swapy - \cf9 428.81\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.67\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.97\cf5 , swapy - \cf9 390.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.38\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.74\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 390.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.15\cf5 , swapy - \cf9 399.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 203.27\cf5 , swapy - \cf9 417.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.15\cf5 , swapy - \cf9 438.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 448.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.38\cf5 , swapy - \cf9 454.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.97\cf5 , swapy - \cf9 448.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.67\cf5 , swapy - \cf9 428.81\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.67\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.97\cf5 , swapy - \cf9 390.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.38\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.74\cf5 , swapy - \cf9 384.53\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+\
+    \cf6 // EYES INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 392.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 397.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 196.06\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 192\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 175.47\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 170.32\cf5 , swapy - \cf9 416.45\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 170.32\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 175.47\cf5 , swapy - \cf9 397.92\cf5 , \cf9 0\cf5 );\
+\
+\
+\
+    glEnd();\
+\
+    glLineWidth(\cf9 3\cf5 );\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 392.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.95\cf5 , swapy - \cf9 397.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 196.06\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 192\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184.02\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 175.47\cf5 , swapy - \cf9 423.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 170.32\cf5 , swapy - \cf9 416.45\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 170.32\cf5 , swapy - \cf9 409.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 175.47\cf5 , swapy - \cf9 397.92\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    \cf6 //right hand\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 161.26\cf5 , swapy - \cf9 728.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 169.29\cf5 , swapy - \cf9 806.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 185.36\cf5 , swapy - \cf9 843.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 185.36\cf5 , swapy - \cf9 869.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 201.42\cf5 , swapy - \cf9 859.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 201.42\cf5 , swapy - \cf9 875.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 220.16\cf5 , swapy - \cf9 859.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.19\cf5 , swapy - \cf9 875.77\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 237.56\cf5 , swapy - \cf9 859.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 246.93\cf5 , swapy - \cf9 869\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 253.62\cf5 , swapy - \cf9 853.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 268.34\cf5 , swapy - \cf9 853.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 253.62\cf5 , swapy - \cf9 826.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 268.34\cf5 , swapy - \cf9 778.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 260.31\cf5 , swapy - \cf9 707.12\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //LEFT hand\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 375\cf5 , swapy - \cf9 699.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.7\cf5 , swapy - \cf9 753.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 352.67\cf5 , swapy - \cf9 807.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.7\cf5 , swapy - \cf9 835.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 352.67\cf5 , swapy - \cf9 854.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 352.67\cf5 , swapy - \cf9 867.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.4\cf5 , swapy - \cf9 861.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 375\cf5 , swapy - \cf9 881.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 383.46\cf5 , swapy - \cf9 867.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 391.49\cf5 , swapy - \cf9 881.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.86\cf5 , swapy - \cf9 867.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 414.24\cf5 , swapy - \cf9 881.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 414.24\cf5 , swapy - \cf9 867.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.63\cf5 , swapy - \cf9 874.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.63\cf5 , swapy - \cf9 861.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 459.76\cf5 , swapy - \cf9 807.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 479.83\cf5 , swapy - \cf9 764.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 487.86\cf5 , swapy - \cf9 723.18\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glPopMatrix();\
+    \cf6 //glTranslatef(-1*transationPLayer2X, -1*transationPLayer2Y, 0);\cf5 \
+    \cf6 //glScalef(1/scaling, 1/scaling,1);\cf5 \
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawPicakWin\cf5 (
+\f1\b \cf7 bool
+\f0\b0 \cf5  right) \{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  swapy = \cf9 900\cf5 ;\
+    glPushMatrix();\
+    glScalef(scaling, scaling, \cf9 1\cf5 );\
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glTranslatef(\cf9 1000\cf5  + xTransfer, transationPLayer2Y, \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glTranslatef(transationPLayer2X + xTransfer, transationPLayer2Y, \cf9 0\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glScalef(-\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glLineWidth(\cf9 5\cf5 );\
+\
+\
+    \cf6 // body with legs\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 293.04\cf5 , swapy - \cf9 991.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305\cf5 , swapy - \cf9 1000.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 279.88\cf5 , swapy - \cf9 1021.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.93\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 176\cf5 , swapy - \cf9 1048\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 151.92\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 1036.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 1030.88\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 1008.16\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.93\cf5 , swapy - \cf9 991.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 971.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 934.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 898.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.76\cf5 , swapy - \cf9 815.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 211.71\cf5 , swapy - \cf9 773.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 768.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 160\cf5 , swapy - \cf9 752\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 152\cf5 , swapy - \cf9 736\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 144\cf5 , swapy - \cf9 720\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 691.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 642.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 211.71\cf5 , swapy - \cf9 626.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 574.04\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 544.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 507.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 467.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 444.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168.66\cf5 , swapy - \cf9 379.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 185.4\cf5 , swapy - \cf9 337.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 291.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 279.88\cf5 , swapy - \cf9 281.04\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 284.67\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.48\cf5 , swapy - \cf9 273.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 371.44\cf5 , swapy - \cf9 276.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 409.04\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 454.49\cf5 , swapy - \cf9 297.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.99\cf5 , swapy - \cf9 318.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 503.89\cf5 , swapy - \cf9 334.3\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 520\cf5 , swapy - \cf9 353\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537\cf5 , swapy - \cf9 378\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 382.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 493.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 524.24\cf5 , swapy - \cf9 624.27\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.03\cf5 , swapy - \cf9 704.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.08\cf5 , swapy - \cf9 888.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 562.12\cf5 , swapy - \cf9 949.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 515.48\cf5 , swapy - \cf9 998.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544\cf5 , swapy - \cf9 1000\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.63\cf5 , swapy - \cf9 1023.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.63\cf5 , swapy - \cf9 1035.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 577.25\cf5 , swapy - \cf9 1046.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 1048.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 459.27\cf5 , swapy - \cf9 1035.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 429.37\cf5 , swapy - \cf9 1016.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 436.55\cf5 , swapy - \cf9 998.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 394.69\cf5 , swapy - \cf9 989.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 330.11\cf5 , swapy - \cf9 985.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.44\cf5 , swapy - \cf9 989.081\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glLineWidth(\cf9 7\cf5 );\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.04\cf5 , swapy - \cf9 991.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305\cf5 , swapy - \cf9 1000.99\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 279.88\cf5 , swapy - \cf9 1021.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.93\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 176\cf5 , swapy - \cf9 1048\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 151.92\cf5 , swapy - \cf9 1042.84\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 1036.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 1030.88\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 1008.16\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 206.93\cf5 , swapy - \cf9 991.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 971.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 934.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 163.88\cf5 , swapy - \cf9 898.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 199.76\cf5 , swapy - \cf9 815.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 211.71\cf5 , swapy - \cf9 773.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 768.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 160\cf5 , swapy - \cf9 752\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 152\cf5 , swapy - \cf9 736\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 144\cf5 , swapy - \cf9 720\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 691.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.62\cf5 , swapy - \cf9 642.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 211.71\cf5 , swapy - \cf9 626.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 574.04\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 544.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 507.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 467.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 157.9\cf5 , swapy - \cf9 444.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168.66\cf5 , swapy - \cf9 379.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 185.4\cf5 , swapy - \cf9 337.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 291.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 279.88\cf5 , swapy - \cf9 281.04\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 284.67\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.48\cf5 , swapy - \cf9 273.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 371.44\cf5 , swapy - \cf9 276.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 409.04\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 454.49\cf5 , swapy - \cf9 297.78\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.99\cf5 , swapy - \cf9 318.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 503.89\cf5 , swapy - \cf9 334.3\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 520\cf5 , swapy - \cf9 353\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537\cf5 , swapy - \cf9 378\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 382.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 493.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 524.24\cf5 , swapy - \cf9 624.27\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.03\cf5 , swapy - \cf9 704.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.08\cf5 , swapy - \cf9 888.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 562.12\cf5 , swapy - \cf9 949.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 515.48\cf5 , swapy - \cf9 998.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544\cf5 , swapy - \cf9 1000\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.63\cf5 , swapy - \cf9 1023.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.63\cf5 , swapy - \cf9 1035.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 577.25\cf5 , swapy - \cf9 1046.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 538.2\cf5 , swapy - \cf9 1048.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 459.27\cf5 , swapy - \cf9 1035.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 429.37\cf5 , swapy - \cf9 1016.53\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 436.55\cf5 , swapy - \cf9 998.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 394.69\cf5 , swapy - \cf9 989.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 330.11\cf5 , swapy - \cf9 985.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.44\cf5 , swapy - \cf9 989.081\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    \cf6 // face small part\cf5 \
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 208\cf5 , swapy - \cf9 624\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 242.81\cf5 , swapy - \cf9 645.8\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // right hand\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 216.5\cf5 , swapy - \cf9 657.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 266.73\cf5 , swapy - \cf9 672.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 294.23\cf5 , swapy - \cf9 691.24\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 214.11\cf5 , swapy - \cf9 772.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 263.14\cf5 , swapy - \cf9 772.56\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // left hand\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 435.35\cf5 , swapy - \cf9 638.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 365.99\cf5 , swapy - \cf9 641.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 302.6\cf5 , swapy - \cf9 676.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 264.33\cf5 , swapy - \cf9 731.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 255.96\cf5 , swapy - \cf9 760.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 275.1\cf5 , swapy - \cf9 784.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 295.43\cf5 , swapy - \cf9 792.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 336.09\cf5 , swapy - \cf9 796.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 421\cf5 , swapy - \cf9 784.52\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // body low part\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 254.77\cf5 , swapy - \cf9 997.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 290.66\cf5 , swapy - \cf9 991.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.44\cf5 , swapy - \cf9 989.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 330.11\cf5 , swapy - \cf9 985.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 394.69\cf5 , swapy - \cf9 989.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 435.35\cf5 , swapy - \cf9 997.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 459.27\cf5 , swapy - \cf9 1003.59\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // right leg finger\cf5 \
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 184\cf5 , swapy - \cf9 1008\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 144\cf5 , swapy - \cf9 1040\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 200\cf5 , swapy - \cf9 1016\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168\cf5 , swapy - \cf9 1043.99\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // left leg finger\cf5 \
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 528\cf5 , swapy - \cf9 1024\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 578.22\cf5 , swapy - \cf9 1040.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 539.4\cf5 , swapy - \cf9 1008.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 586.78\cf5 , swapy - \cf9 1029.1\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // nose //here\cf5 \
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) \{\
+        glColor3f(\cf9 0.71\cf5 , \cf9 0.423\cf5 , \cf9 0\cf5 );\
+        glPushMatrix();\
+        \cf6 //glRotatef(90, 1, 0, 0);\cf5 \
+        glBegin(GL_QUADS);\
+\
+        glVertex3f(\cf9 240.58\cf5 , swapy - \cf9 454.45\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 265.53\cf5 , swapy - \cf9 473.58\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 278.69\cf5 , swapy - \cf9 454.45\cf5 , \cf9 0\cf5 );\
+\
+\
+        glVertex3f(\cf9 240.58\cf5 , swapy - \cf9 473.58\cf5 , \cf9 0\cf5 );\
+\
+\
+        glEnd();\
+        glPopMatrix();\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glBegin(GL_TRIANGLES);\
+        glVertex3f(\cf9 250.58\cf5 , swapy - \cf9 454.45\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 265.53\cf5 , swapy - \cf9 473.58\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 278.69\cf5 , swapy - \cf9 454.45\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+    \}\
+\
+    \cf6 // mouse\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 216.5\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 224.87\cf5 , swapy - \cf9 514.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 242.81\cf5 , swapy - \cf9 514.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.53\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 297.82\cf5 , swapy - \cf9 526.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 324.13\cf5 , swapy - \cf9 526.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 345.66\cf5 , swapy - \cf9 514.25\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //side triangles\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+\
+    glVertex3f(\cf9 572.22\cf5 , swapy - \cf9 700.81\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 503.52\cf5 , swapy - \cf9 725.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 496.34\cf5 , swapy - \cf9 735.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 503.52\cf5 , swapy - \cf9 742.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 579.4\cf5 , swapy - \cf9 742.67\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+    glBegin(GL_TRIANGLES);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 589.73\cf5 , swapy - \cf9 826.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 520\cf5 , swapy - \cf9 872\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 596.9\cf5 , swapy - \cf9 873.02\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 // RIGHT CIRCLE\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.9137\cf5 , \cf9 0.302\cf5 , \cf9 0.1412\cf5 );\
+\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 489.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 453.29\cf5 , swapy - \cf9 487.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 483.19\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 491.17\cf5 , swapy - \cf9 536.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 477.21\cf5 , swapy - \cf9 570.45\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 453.29\cf5 , swapy - \cf9 581.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 432.96\cf5 , swapy - \cf9 581.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 412.63\cf5 , swapy - \cf9 575.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 558.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.49\cf5 , swapy - \cf9 542.95\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 393.49\cf5 , swapy - \cf9 526.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 489.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 453.29\cf5 , swapy - \cf9 487.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 483.19\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 491.17\cf5 , swapy - \cf9 536.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 477.21\cf5 , swapy - \cf9 570.45\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 453.29\cf5 , swapy - \cf9 581.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 432.96\cf5 , swapy - \cf9 581.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 412.63\cf5 , swapy - \cf9 575.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 558.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 393.49\cf5 , swapy - \cf9 542.95\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 393.49\cf5 , swapy - \cf9 526.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 502.29\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // LEFT CIRCLE\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.9137\cf5 , \cf9 0.302\cf5 , \cf9 0.1412\cf5 );\
+    glVertex3f(\cf9 149.53\cf5 , swapy - \cf9 462.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168.66\cf5 , swapy - \cf9 473.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 497.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 529.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.88\cf5 , swapy - \cf9 558.71\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 149.53\cf5 , swapy - \cf9 565.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 544.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 507.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 467.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 149.02\cf5 , swapy - \cf9 463.62\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 149.53\cf5 , swapy - \cf9 462.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168.66\cf5 , swapy - \cf9 473.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 497.5\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 529.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.88\cf5 , swapy - \cf9 558.71\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 149.53\cf5 , swapy - \cf9 565.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136.37\cf5 , swapy - \cf9 544.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 507.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.13\cf5 , swapy - \cf9 467.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 149.02\cf5 , swapy - \cf9 463.62\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // RIGHT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 205.73\cf5 , swapy - \cf9 312.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 236.83\cf5 , swapy - \cf9 157.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 291.84\cf5 , swapy - \cf9 64.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 53.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.22\cf5 , swapy - \cf9 129.16\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 284.67\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 291.8\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 205.73\cf5 , swapy - \cf9 312.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 236.83\cf5 , swapy - \cf9 157.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 291.84\cf5 , swapy - \cf9 64.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 53.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.22\cf5 , swapy - \cf9 129.16\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 284.67\cf5 , swapy - \cf9 279.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 291.8\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 //INNER EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 280\cf5 , swapy - \cf9 80\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 236.83\cf5 , swapy - \cf9 157.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 291.84\cf5 , swapy - \cf9 64.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 367.18\cf5 , swapy - \cf9 53.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 355.22\cf5 , swapy - \cf9 129.16\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 336.09\cf5 , swapy - \cf9 172.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 307.39\cf5 , swapy - \cf9 107.63\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // LEFT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 459.88\cf5 , swapy - \cf9 328\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488\cf5 , swapy - \cf9 316.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 602.78\cf5 , swapy - \cf9 289.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 717.59\cf5 , swapy - \cf9 289.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 795.32\cf5 , swapy - \cf9 312.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 765.43\cf5 , swapy - \cf9 330.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 694.87\cf5 , swapy - \cf9 357.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 611.15\cf5 , swapy - \cf9 375.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 502.32\cf5 , swapy - \cf9 382.69\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 459.88\cf5 , swapy - \cf9 328\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488\cf5 , swapy - \cf9 316.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 602.78\cf5 , swapy - \cf9 289.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 717.59\cf5 , swapy - \cf9 289.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 795.32\cf5 , swapy - \cf9 312.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 765.43\cf5 , swapy - \cf9 330.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 694.87\cf5 , swapy - \cf9 357.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 611.15\cf5 , swapy - \cf9 375.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 502.32\cf5 , swapy - \cf9 382.69\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //INNER EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704\cf5 , swapy - \cf9 328\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 717.59\cf5 , swapy - \cf9 289.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 795.32\cf5 , swapy - \cf9 312.14\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 765.43\cf5 , swapy - \cf9 330.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 694.87\cf5 , swapy - \cf9 357.58\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 654.21\cf5 , swapy - \cf9 365.95\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 676.93\cf5 , swapy - \cf9 344.43\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 //LEFT EYE OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 382.73\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 376.56\cf5 , swapy - \cf9 443.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 382.73\cf5 , swapy - \cf9 460.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 389.91\cf5 , swapy - \cf9 471.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 480.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 411.43\cf5 , swapy - \cf9 485.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 480.76\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 437.74\cf5 , swapy - \cf9 471.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.11\cf5 , swapy - \cf9 450.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.11\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 437.74\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 405.42\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 382.73\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 376.56\cf5 , swapy - \cf9 443.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 382.73\cf5 , swapy - \cf9 460.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 389.91\cf5 , swapy - \cf9 471.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 400.67\cf5 , swapy - \cf9 480.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 411.43\cf5 , swapy - \cf9 485.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 480.76\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 437.74\cf5 , swapy - \cf9 471.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.11\cf5 , swapy - \cf9 450.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 446.11\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 437.74\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 424.59\cf5 , swapy - \cf9 405.42\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 411.34\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 423.39\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 418.61\cf5 , swapy - \cf9 437.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 407.34\cf5 , swapy - \cf9 445.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 397.08\cf5 , swapy - \cf9 437.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 397.08\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // WIDTH\cf5 \
+    glLineWidth(\cf9 3\cf5 );\
+\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 411.34\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 423.39\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 418.61\cf5 , swapy - \cf9 437.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 407.34\cf5 , swapy - \cf9 445.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 397.08\cf5 , swapy - \cf9 437.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 397.08\cf5 , swapy - \cf9 426.94\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 435.35\cf5 , swapy - \cf9 393.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360\cf5 , swapy - \cf9 440\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //RIGHT EYE OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 214.11\cf5 , swapy - \cf9 393.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.95\cf5 , swapy - \cf9 400.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 188.38\cf5 , swapy - \cf9 421.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 443.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.38\cf5 , swapy - \cf9 465.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.95\cf5 , swapy - \cf9 472.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 214.11\cf5 , swapy - \cf9 465.21\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 449.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 233.24\cf5 , swapy - \cf9 429.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 233.24\cf5 , swapy - \cf9 410.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 214.11\cf5 , swapy - \cf9 393.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.95\cf5 , swapy - \cf9 400.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 188.38\cf5 , swapy - \cf9 421.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 183.01\cf5 , swapy - \cf9 443.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 191.38\cf5 , swapy - \cf9 465.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.95\cf5 , swapy - \cf9 472.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 214.11\cf5 , swapy - \cf9 465.21\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 449.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 233.24\cf5 , swapy - \cf9 429.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 233.24\cf5 , swapy - \cf9 410.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 406.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 210.52\cf5 , swapy - \cf9 412.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 204.54\cf5 , swapy - \cf9 423.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 210.52\cf5 , swapy - \cf9 432.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 432.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 412.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 406.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // WIDTH\cf5 \
+    glLineWidth(\cf9 3\cf5 );\
+\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 406.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 210.52\cf5 , swapy - \cf9 412.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 204.54\cf5 , swapy - \cf9 423.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 210.52\cf5 , swapy - \cf9 432.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 432.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 227.26\cf5 , swapy - \cf9 412.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 221.48\cf5 , swapy - \cf9 406.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 202.15\cf5 , swapy - \cf9 382.69\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 248\cf5 , swapy - \cf9 424\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // TAIL\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+\
+    glVertex3f(\cf9 531.04\cf5 , swapy - \cf9 577.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 541.79\cf5 , swapy - \cf9 487.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 541.79\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 692.47\cf5 , swapy - \cf9 366.15\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 857.51\cf5 , swapy - \cf9 328.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 839.57\cf5 , swapy - \cf9 551.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 571.65\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // WIDTH\cf5 \
+    \cf6 //glLineWidth(3);\cf5 \
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.04\cf5 , swapy - \cf9 577.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 541.79\cf5 , swapy - \cf9 487.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 541.79\cf5 , swapy - \cf9 416.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 692.47\cf5 , swapy - \cf9 366.15\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 857.51\cf5 , swapy - \cf9 328.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 839.57\cf5 , swapy - \cf9 551.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 571.65\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 531.04\cf5 , swapy - \cf9 577.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 571.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 525.05\cf5 , swapy - \cf9 626.66\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 571.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 525.05\cf5 , swapy - \cf9 626.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 577.67\cf5 , swapy - \cf9 678.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 672.14\cf5 , swapy - \cf9 655.36\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 577.67\cf5 , swapy - \cf9 678.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 672.14\cf5 , swapy - \cf9 655.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 741.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537\cf5 , swapy - \cf9 730.71\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 537\cf5 , swapy - \cf9 730.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 741.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 546.57\cf5 , swapy - \cf9 766.58\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 741.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 546.57\cf5 , swapy - \cf9 766.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 792.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 642.25\cf5 , swapy - \cf9 780.94\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 792.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 642.25\cf5 , swapy - \cf9 780.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 572.88\cf5 , swapy - \cf9 871.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.53\cf5 , swapy - \cf9 827.58\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // WIDTH\cf5 \
+    glLineWidth(\cf9 7\cf5 );\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 571.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 672.14\cf5 , swapy - \cf9 655.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 741.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 642.25\cf5 , swapy - \cf9 780.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 572.88\cf5 , swapy - \cf9 871.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.53\cf5 , swapy - \cf9 827.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 588.43\cf5 , swapy - \cf9 792.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 546.57\cf5 , swapy - \cf9 766.58\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 537\cf5 , swapy - \cf9 730.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 577.67\cf5 , swapy - \cf9 678.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 525.05\cf5 , swapy - \cf9 626.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.04\cf5 , swapy - \cf9 577.01\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //\cf5 \
+    glPopMatrix();\
+\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawPicakFight\cf5 (
+\f1\b \cf7 bool
+\f0\b0 \cf5  right) \{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  swapy = \cf9 900\cf5 ;\
+    \cf6 //glTranslatef(<#GLfloat x#>, <#GLfloat y#>, <#GLfloat z#>)\cf5 \
+    \cf6 //glScalef(-1, 1,1);\cf5 \
+    glPushMatrix();\
+\
+    glLineWidth(\cf9 5\cf5 );\
+    \cf6 //glScalef(-1, 1,1);\cf5 \
+    glScalef(scaling, scaling, \cf9 1\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glTranslatef(\cf9 1000\cf5 , transationPLayer2Y, \cf9 0\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glTranslatef(transationPLayer2X, transationPLayer2Y, \cf9 0\cf5 );\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glScalef(-\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    \cf6 //glTranslatef(<#GLfloat x#>, <#GLfloat y#>, <#GLfloat z#>)\cf5 \
+    \cf6 // RIGHT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 323.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 222.26\cf5 , swapy - \cf9 144.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.25\cf5 , swapy - \cf9 57.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 322.65\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 101.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 295.88\cf5 , swapy - \cf9 192.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 247.69\cf5 , swapy - \cf9 269.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.08\cf5 , swapy - \cf9 274.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 186.07\cf5 , swapy - \cf9 286.93\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    \cf6 //glColor3f( 0.851,0.251,0.251);\cf5 \
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 323.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 222.26\cf5 , swapy - \cf9 144.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.25\cf5 , swapy - \cf9 57.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 322.65\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 101.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 295.88\cf5 , swapy - \cf9 192.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 247.69\cf5 , swapy - \cf9 269.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.08\cf5 , swapy - \cf9 274.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 186.07\cf5 , swapy - \cf9 286.93\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 253.46\cf5 , swapy - \cf9 112.42\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.25\cf5 , swapy - \cf9 57.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 322.65\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 46.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 101.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 295.88\cf5 , swapy - \cf9 192.24\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 285.75\cf5 , swapy - \cf9 209.64\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 273.82\cf5 , swapy - \cf9 148.2\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // BODY\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.992\cf5 , \cf9 0.867\cf5 , \cf9 0.286\cf5 );\
+    \cf6 //glColor3f(0.992, 0.867, 0.286);\cf5 \
+    glVertex3f(\cf9 155.33\cf5 , swapy - \cf9 651.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 137.93\cf5 , swapy - \cf9 636.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 116.52\cf5 , swapy - \cf9 619.23\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 99.11\cf5 , swapy - \cf9 600.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 75.02\cf5 , swapy - \cf9 581.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 61.64\cf5 , swapy - \cf9 561.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 534.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 504.12\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 61.64\cf5 , swapy - \cf9 480.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 75.02\cf5 , swapy - \cf9 442.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 84.39\cf5 , swapy - \cf9 399.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 99.11\cf5 , swapy - \cf9 359.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 131.24\cf5 , swapy - \cf9 320.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 186.07\cf5 , swapy - \cf9 286.93\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.08\cf5 , swapy - \cf9 274.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 247.69\cf5 , swapy - \cf9 267.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 286.51\cf5 , swapy - \cf9 263.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 269.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 408.32\cf5 , swapy - \cf9 293.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 408\cf5 , swapy - \cf9 296\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 448\cf5 , swapy - \cf9 320\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 475.24\cf5 , swapy - \cf9 360.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.993\cf5 , swapy - \cf9 375.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 402.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.32\cf5 , swapy - \cf9 434.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.32\cf5 , swapy - \cf9 474.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 514.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 480\cf5 , swapy - \cf9 560\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 584.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 617.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 506.03\cf5 , swapy - \cf9 652.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 694.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 542.17\cf5 , swapy - \cf9 715.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 555.55\cf5 , swapy - \cf9 746.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 567.6\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 825.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 850.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 893.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 927.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 567.6\cf5 , swapy - \cf9 959.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 548.95\cf5 , swapy - \cf9 976.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 449.81\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 417.69\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 390.91\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 369.5\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.71\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 314.62\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.67\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.73\cf5 , swapy - \cf9 968.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 152.66\cf5 , swapy - \cf9 947.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 920.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 878.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 850.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 825.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 115.18\cf5 , swapy - \cf9 790.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 91.08\cf5 , swapy - \cf9 790.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 65.65\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 48.25\cf5 , swapy - \cf9 762.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 41.56\cf5 , swapy - \cf9 734.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 41.56\cf5 , swapy - \cf9 700.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 57.89\cf5 , swapy - \cf9 671.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 91.08\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.48\cf5 , swapy - \cf9 639.42\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 118.21\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.48\cf5 , swapy - \cf9 652.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.52\cf5 , swapy - \cf9 656.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 660.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 143.29\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.33\cf5 , swapy - \cf9 651.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 137.93\cf5 , swapy - \cf9 636.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 116.52\cf5 , swapy - \cf9 619.23\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 99.11\cf5 , swapy - \cf9 600.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 75.02\cf5 , swapy - \cf9 581.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 61.64\cf5 , swapy - \cf9 561.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 534.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 504.12\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 61.64\cf5 , swapy - \cf9 480.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 75.02\cf5 , swapy - \cf9 442.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 84.39\cf5 , swapy - \cf9 399.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 99.11\cf5 , swapy - \cf9 359.56\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 131.24\cf5 , swapy - \cf9 320.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 186.07\cf5 , swapy - \cf9 286.93\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.08\cf5 , swapy - \cf9 274.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 247.69\cf5 , swapy - \cf9 267.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 286.51\cf5 , swapy - \cf9 263.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.36\cf5 , swapy - \cf9 269.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 408.32\cf5 , swapy - \cf9 293.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 408\cf5 , swapy - \cf9 296\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 448\cf5 , swapy - \cf9 320\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 475.24\cf5 , swapy - \cf9 360.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.993\cf5 , swapy - \cf9 375.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 402.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.32\cf5 , swapy - \cf9 434.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.32\cf5 , swapy - \cf9 474.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 514.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 480\cf5 , swapy - \cf9 560\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 584.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 617.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 506.03\cf5 , swapy - \cf9 652.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 694.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 542.17\cf5 , swapy - \cf9 715.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 555.55\cf5 , swapy - \cf9 746.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 567.6\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 825.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 850.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 893.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 927.1\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 567.6\cf5 , swapy - \cf9 959.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 548.95\cf5 , swapy - \cf9 976.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 449.81\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 417.69\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 390.91\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 369.5\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.71\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 314.62\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.67\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 172.73\cf5 , swapy - \cf9 968.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 152.66\cf5 , swapy - \cf9 947.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 920.4\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 878.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 850.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 121.87\cf5 , swapy - \cf9 825.37\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 115.18\cf5 , swapy - \cf9 790.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 91.08\cf5 , swapy - \cf9 790.57\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 65.65\cf5 , swapy - \cf9 779.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 48.25\cf5 , swapy - \cf9 762.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 41.56\cf5 , swapy - \cf9 734.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 41.56\cf5 , swapy - \cf9 700.88\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 57.89\cf5 , swapy - \cf9 671.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 91.08\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.48\cf5 , swapy - \cf9 639.42\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 118.21\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.48\cf5 , swapy - \cf9 652.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.52\cf5 , swapy - \cf9 656.48\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.58\cf5 , swapy - \cf9 660.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 143.29\cf5 , swapy - \cf9 644.67\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glLineWidth(\cf9 5\cf5 );\
+\
+\
+\
+\
+\
+\
+    \cf6 // LEFT EAR\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.988\cf5 , \cf9 0.8627\cf5 , \cf9 0.286\cf5 );\
+    glVertex3f(\cf9 392\cf5 , swapy - \cf9 312\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 429.25\cf5 , swapy - \cf9 284.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 476.58\cf5 , swapy - \cf9 249.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.23\cf5 , swapy - \cf9 212.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 651.93\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 710.82\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 744.29\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 777.75\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 767.04\cf5 , swapy - \cf9 205.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 733.58\cf5 , swapy - \cf9 233.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 673.35\cf5 , swapy - \cf9 280.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 621.14\cf5 , swapy - \cf9 304.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.85\cf5 , swapy - \cf9 334.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 435.09\cf5 , swapy - \cf9 372.94\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 392\cf5 , swapy - \cf9 312\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 429.25\cf5 , swapy - \cf9 284.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 476.58\cf5 , swapy - \cf9 249.8\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 558.23\cf5 , swapy - \cf9 212.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 651.93\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 710.82\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 744.29\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 777.75\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 767.04\cf5 , swapy - \cf9 205.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 733.58\cf5 , swapy - \cf9 233.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 673.35\cf5 , swapy - \cf9 280.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 621.14\cf5 , swapy - \cf9 304.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.85\cf5 , swapy - \cf9 334.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 435.09\cf5 , swapy - \cf9 372.94\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 600\cf5 , swapy - \cf9 200\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 651.93\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 710.82\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 744.29\cf5 , swapy - \cf9 176.18\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 777.75\cf5 , swapy - \cf9 185.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 767.04\cf5 , swapy - \cf9 205.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 733.58\cf5 , swapy - \cf9 233.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 673.35\cf5 , swapy - \cf9 280.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 621.14\cf5 , swapy - \cf9 304.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 597.08\cf5 , swapy - \cf9 314.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 626.93\cf5 , swapy - \cf9 292.15\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 639.73\cf5 , swapy - \cf9 275.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 654.96\cf5 , swapy - \cf9 247.06\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.8\cf5 , swapy - \cf9 218.43\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 676.89\cf5 , swapy - \cf9 192.23\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+\
+    \cf6 //RIGHT HAND\cf5 \
+\
+    glBegin(GL_LINE_STRIP);\
+    glVertex3f(\cf9 117.85\cf5 , swapy - \cf9 686.33\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 135.26\cf5 , swapy - \cf9 686.33\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.45\cf5 , swapy - \cf9 697.3\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 145.01\cf5 , swapy - \cf9 704.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 135.26\cf5 , swapy - \cf9 708.27\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 138.31\cf5 , swapy - \cf9 719.23\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 135.26\cf5 , swapy - \cf9 735.68\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 124.91\cf5 , swapy - \cf9 757.62\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_STRIP);\
+    glVertex3f(\cf9 113.33\cf5 , swapy - \cf9 668.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 133.72\cf5 , swapy - \cf9 668.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 143.31\cf5 , swapy - \cf9 689.38\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    \cf6 // LEFT HAND\cf5 \
+    glBegin(GL_LINE_STRIP);\
+    glVertex3f(\cf9 380.21\cf5 , swapy - \cf9 656.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 372.26\cf5 , swapy - \cf9 670.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 385.67\cf5 , swapy - \cf9 684.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 335.71\cf5 , swapy - \cf9 663.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 324.74\cf5 , swapy - \cf9 656.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 316.21\cf5 , swapy - \cf9 652.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 311.95\cf5 , swapy - \cf9 656.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 311.95\cf5 , swapy - \cf9 661.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 298.55\cf5 , swapy - \cf9 656.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 288\cf5 , swapy - \cf9 656\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 286.97\cf5 , swapy - \cf9 684.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 294.28\cf5 , swapy - \cf9 670.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 280.88\cf5 , swapy - \cf9 667.45\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 276.61\cf5 , swapy - \cf9 676.59\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 280.88\cf5 , swapy - \cf9 684.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 272.35\cf5 , swapy - \cf9 684.51\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.04\cf5 , swapy - \cf9 700.35\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 272.35\cf5 , swapy - \cf9 707.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 261.38\cf5 , swapy - \cf9 705.22\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 255.9\cf5 , swapy - \cf9 714.97\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 272.35\cf5 , swapy - \cf9 735.07\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 280.88\cf5 , swapy - \cf9 751.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.85\cf5 , swapy - \cf9 803.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.28\cf5 , swapy - \cf9 809.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 380.21\cf5 , swapy - \cf9 810.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 405.77\cf5 , swapy - \cf9 810.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 436.24\cf5 , swapy - \cf9 792.95\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 475.23\cf5 , swapy - \cf9 742.99\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // TAIL\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.11\cf5 , \cf9 0.1\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.988\cf5 , \cf9 0.8627\cf5 , \cf9 0.286\cf5 );\
+    \cf6 //glColor3f(0.988, 0.8627, 0.286);\cf5 \
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 568.37\cf5 , \cf9 0\cf5 );\
+\
+    glVertex3f(\cf9 499.34\cf5 , swapy - \cf9 462.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 563.59\cf5 , swapy - \cf9 393.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.67\cf5 , swapy - \cf9 281.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 866.09\cf5 , swapy - \cf9 411.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+    glBegin(GL_POLYGON);\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 837.98\cf5 , swapy - \cf9 611.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.29\cf5 , swapy - \cf9 704.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    glBegin(GL_POLYGON);\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 801.84\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+\
+    \cf6 // END OF THE TAIL\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+\
+    glVertex3f(\cf9 644.91\cf5 , swapy - \cf9 784\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 640\cf5 , swapy - \cf9 806.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 663.96\cf5 , swapy - \cf9 795.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 656.61\cf5 , swapy - \cf9 814.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 679.28\cf5 , swapy - \cf9 808.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.44\cf5 , swapy - \cf9 824.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 696\cf5 , swapy - \cf9 816\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 //  glLineWidth(13);\cf5 \
+\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 644.91\cf5 , swapy - \cf9 784\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 640\cf5 , swapy - \cf9 806.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 663.96\cf5 , swapy - \cf9 795.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 656.61\cf5 , swapy - \cf9 814.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 679.28\cf5 , swapy - \cf9 808.36\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.44\cf5 , swapy - \cf9 824.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 696\cf5 , swapy - \cf9 816\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 499.34\cf5 , swapy - \cf9 462.63\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 563.59\cf5 , swapy - \cf9 393.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 670.67\cf5 , swapy - \cf9 281.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 866.09\cf5 , swapy - \cf9 411.76\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 540.26\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 837.98\cf5 , swapy - \cf9 611.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 704.13\cf5 , swapy - \cf9 698.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 801.84\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 589.02\cf5 , swapy - \cf9 886.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 580.99\cf5 , swapy - \cf9 838.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 681.38\cf5 , swapy - \cf9 751.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 574.29\cf5 , swapy - \cf9 704.9\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 650.59\cf5 , swapy - \cf9 621.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 481.93\cf5 , swapy - \cf9 568.37\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 //\cf5 \
+\
+\
+    glBegin(GL_LINE_STRIP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 162.07\cf5 , swapy - \cf9 533.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 181.43\cf5 , swapy - \cf9 512.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 193.29\cf5 , swapy - \cf9 507.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 200.78\cf5 , swapy - \cf9 507.82\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 228.26\cf5 , swapy - \cf9 519.62\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 262.6\cf5 , swapy - \cf9 540.72\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // sides triangles\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+\
+    glVertex3f(\cf9 522.14\cf5 , swapy - \cf9 686.33\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 505.69\cf5 , swapy - \cf9 699.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.94\cf5 , swapy - \cf9 711.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 495.94\cf5 , swapy - \cf9 717.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 501.43\cf5 , swapy - \cf9 722.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 522.14\cf5 , swapy - \cf9 722.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 542.25\cf5 , swapy - \cf9 717.41\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+    glBegin(GL_TRIANGLES);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0.643\cf5 , \cf9 0.341\cf5 , \cf9 0.125\cf5 );\
+    glVertex3f(\cf9 568\cf5 , swapy - \cf9 792\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 534.11\cf5 , swapy - \cf9 827.81\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 582.46\cf5 , swapy - \cf9 833.77\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // nose\cf5 \
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) \{\
+        glColor3f(\cf9 0.71\cf5 , \cf9 0.423\cf5 , \cf9 0\cf5 );\
+        glBegin(GL_QUADS);\
+\
+\
+        glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 444.31\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 204.72\cf5 , swapy - \cf9 444.31\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 490.15\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 204.72\cf5 , swapy - \cf9 490.15\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+    \}\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5  \{\
+        glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glBegin(GL_TRIANGLES);\
+\
+\
+        glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 474.31\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 204.72\cf5 , swapy - \cf9 474.31\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 190.1\cf5 , swapy - \cf9 490.15\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+    \}\
+    \cf6 // right red circle\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.976\cf5 , \cf9 0.27\cf5 , \cf9 0.196\cf5 );\
+\
+    glVertex3f(\cf9 60.94\cf5 , swapy - \cf9 486.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 71.29\cf5 , swapy - \cf9 493.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 83.48\cf5 , swapy - \cf9 514.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 83.48\cf5 , swapy - \cf9 534.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 74.95\cf5 , swapy - \cf9 554.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 65.2\cf5 , swapy - \cf9 562.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 534.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 504.12\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 60.94\cf5 , swapy - \cf9 486.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 71.29\cf5 , swapy - \cf9 493.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 83.48\cf5 , swapy - \cf9 514.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 83.48\cf5 , swapy - \cf9 534.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 74.95\cf5 , swapy - \cf9 554.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 65.2\cf5 , swapy - \cf9 562.05\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 534.91\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 50.93\cf5 , swapy - \cf9 504.12\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    \cf6 // left red circle\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.976\cf5 , \cf9 0.27\cf5 , \cf9 0.196\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 496.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368.61\cf5 , swapy - \cf9 479.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 389.32\cf5 , swapy - \cf9 474.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 407.6\cf5 , swapy - \cf9 479.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 419.18\cf5 , swapy - \cf9 489.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.1\cf5 , swapy - \cf9 507.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.1\cf5 , swapy - \cf9 525.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 419.18\cf5 , swapy - \cf9 544.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 399.07\cf5 , swapy - \cf9 554.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.97\cf5 , swapy - \cf9 554.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.08\cf5 , swapy - \cf9 544.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 535.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 346.68\cf5 , swapy - \cf9 521.23\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 496.25\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368.61\cf5 , swapy - \cf9 479.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 389.32\cf5 , swapy - \cf9 474.31\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 407.6\cf5 , swapy - \cf9 479.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 419.18\cf5 , swapy - \cf9 489.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.1\cf5 , swapy - \cf9 507.21\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 427.1\cf5 , swapy - \cf9 525.49\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 419.18\cf5 , swapy - \cf9 544.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 399.07\cf5 , swapy - \cf9 554.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 378.97\cf5 , swapy - \cf9 554.13\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.08\cf5 , swapy - \cf9 544.38\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 535.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 346.68\cf5 , swapy - \cf9 521.23\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    \cf6 // LEGS\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.98\cf5 , \cf9 0.832\cf5 , \cf9 0.25\cf5 );\
+    \cf6 //glColor3f(0.98, 0.832, 0.25);\cf5 \
+    glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 975.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 148.45\cf5 , swapy - \cf9 1008.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1042.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 138.31\cf5 , swapy - \cf9 1056.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.98\cf5 , swapy - \cf9 1059.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 197.41\cf5 , swapy - \cf9 1046.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 232.75\cf5 , swapy - \cf9 1028.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.65\cf5 , swapy - \cf9 1007.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 276.61\cf5 , swapy - \cf9 994.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 179.74\cf5 , swapy - \cf9 975.73\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 148.45\cf5 , swapy - \cf9 1008.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1042.75\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 138.31\cf5 , swapy - \cf9 1056.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.98\cf5 , swapy - \cf9 1059.2\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 197.41\cf5 , swapy - \cf9 1046.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 232.75\cf5 , swapy - \cf9 1028.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.65\cf5 , swapy - \cf9 1007.41\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 276.61\cf5 , swapy - \cf9 994.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 265.09\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 243.68\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 218.73\cf5 , swapy - \cf9 990.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 190.14\cf5 , swapy - \cf9 981.98\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 180.96\cf5 , swapy - \cf9 1025.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 145.01\cf5 , swapy - \cf9 1053.71\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.64\cf5 , swapy - \cf9 1022.03\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.22\cf5 , swapy - \cf9 1050.67\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 .11\cf5 , \cf9 0.11\cf5 , \cf9 0.11\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5   glColor3f(\cf9 0.98\cf5 , \cf9 0.832\cf5 , \cf9 0.25\cf5 );\
+    glVertex3f(\cf9 560.52\cf5 , swapy - \cf9 965.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1023.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 578.8\cf5 , swapy - \cf9 1062.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 564.79\cf5 , swapy - \cf9 1089.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.07\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 514.83\cf5 , swapy - \cf9 1055.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 473.4\cf5 , swapy - \cf9 997.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 548.95\cf5 , swapy - \cf9 976.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 559.6\cf5 , swapy - \cf9 966.57\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 560.52\cf5 , swapy - \cf9 965.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1023.86\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 578.8\cf5 , swapy - \cf9 1062.85\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 575.15\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 564.79\cf5 , swapy - \cf9 1089.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 544.07\cf5 , swapy - \cf9 1084.79\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 514.83\cf5 , swapy - \cf9 1055.54\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 473.4\cf5 , swapy - \cf9 997.66\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 488.63\cf5 , swapy - \cf9 996.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 531.46\cf5 , swapy - \cf9 986.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 548.95\cf5 , swapy - \cf9 976.34\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 559.6\cf5 , swapy - \cf9 966.57\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 532.5\cf5 , swapy - \cf9 1039.09\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 559.31\cf5 , swapy - \cf9 1086.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 553.82\cf5 , swapy - \cf9 1032.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 572.1\cf5 , swapy - \cf9 1084.18\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+\
+\
+    \cf6 // EYES OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 393.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 119.42\cf5 , swapy - \cf9 397.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.46\cf5 , swapy - \cf9 409.12\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 102.37\cf5 , swapy - \cf9 421.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.37\cf5 , swapy - \cf9 432.28\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.37\cf5 , swapy - \cf9 444.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.46\cf5 , swapy - \cf9 459.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 118.47\cf5 , swapy - \cf9 467.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 467.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 140.75\cf5 , swapy - \cf9 462.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 150.5\cf5 , swapy - \cf9 455.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.37\cf5 , swapy - \cf9 442.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.64\cf5 , swapy - \cf9 417.65\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 393.89\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 119.42\cf5 , swapy - \cf9 397.55\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.46\cf5 , swapy - \cf9 409.12\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 102.37\cf5 , swapy - \cf9 421.92\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.37\cf5 , swapy - \cf9 432.28\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 101.37\cf5 , swapy - \cf9 444.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 108.46\cf5 , swapy - \cf9 459.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 118.47\cf5 , swapy - \cf9 467.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128.56\cf5 , swapy - \cf9 467.39\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 140.75\cf5 , swapy - \cf9 462.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 150.5\cf5 , swapy - \cf9 455.6\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 155.37\cf5 , swapy - \cf9 442.02\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 159.64\cf5 , swapy - \cf9 417.65\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // EYES INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 407\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.75\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.75\cf5 , swapy - \cf9 424\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 144\cf5 , swapy - \cf9 432\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 139.19\cf5 , swapy - \cf9 436.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.34\cf5 , swapy - \cf9 436.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.2\cf5 , swapy - \cf9 410.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.34\cf5 , swapy - \cf9 408\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 407\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+\
+    glLineWidth(\cf9 3\cf5 );\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 407\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.75\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 147.75\cf5 , swapy - \cf9 424\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 144\cf5 , swapy - \cf9 432\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 139.19\cf5 , swapy - \cf9 436.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.34\cf5 , swapy - \cf9 436.01\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 128\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 125.28\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 130.2\cf5 , swapy - \cf9 410.11\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 132.34\cf5 , swapy - \cf9 408\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 136\cf5 , swapy - \cf9 407\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 117.85\cf5 , swapy - \cf9 383.93\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 168.77\cf5 , swapy - \cf9 425.35\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+\
+\
+    \cf6 // EYES OUTER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.06\cf5 , swapy - \cf9 420.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.06\cf5 , swapy - \cf9 435.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 298.55\cf5 , swapy - \cf9 449.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 307.68\cf5 , swapy - \cf9 461.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 320.48\cf5 , swapy - \cf9 467.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 337.54\cf5 , swapy - \cf9 467.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 465.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.08\cf5 , swapy - \cf9 460.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368\cf5 , swapy - \cf9 449.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 372.87\cf5 , swapy - \cf9 432.28\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 372.87\cf5 , swapy - \cf9 420.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368\cf5 , swapy - \cf9 405.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 358.08\cf5 , swapy - \cf9 395.72\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.24\cf5 , swapy - \cf9 391.46\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+\
+    glBegin(GL_LINE_LOOP);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.06\cf5 , swapy - \cf9 420.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 293.06\cf5 , swapy - \cf9 435.32\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 298.55\cf5 , swapy - \cf9 449.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 307.68\cf5 , swapy - \cf9 461.74\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 320.48\cf5 , swapy - \cf9 467.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 337.54\cf5 , swapy - \cf9 467.61\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 350.94\cf5 , swapy - \cf9 465.17\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 360.08\cf5 , swapy - \cf9 460.08\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368\cf5 , swapy - \cf9 449.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 372.87\cf5 , swapy - \cf9 432.28\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 372.87\cf5 , swapy - \cf9 420.7\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 368\cf5 , swapy - \cf9 405.47\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 358.08\cf5 , swapy - \cf9 395.72\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 344.24\cf5 , swapy - \cf9 391.46\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+\
+    \cf6 // EYES INNER\cf5 \
+    glBegin(GL_POLYGON);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 328\cf5 , swapy - \cf9 401.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.51\cf5 , swapy - \cf9 405.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.44\cf5 , swapy - \cf9 411.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 340.15\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.44\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.51\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 328\cf5 , swapy - \cf9 436.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 320\cf5 , swapy - \cf9 437.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 312\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 308.05\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+\
+\
+    glEnd();\
+\
+    glLineWidth(\cf9 4\cf5 );\
+    glBegin(GL_LINE_LOOP);\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (right) glColor3f(\cf9 0.58\cf5 , \cf9 0\cf5 , \cf9 0.062\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    glColor3f(\cf9 1\cf5 , \cf9 1\cf5 , \cf9 1\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 328\cf5 , swapy - \cf9 401.98\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.51\cf5 , swapy - \cf9 405.19\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.44\cf5 , swapy - \cf9 411.83\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 340.15\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 338.44\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 333.51\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 328\cf5 , swapy - \cf9 436.65\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 320\cf5 , swapy - \cf9 437.94\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 312\cf5 , swapy - \cf9 433.87\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 308.05\cf5 , swapy - \cf9 428.52\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 421.46\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 305.91\cf5 , swapy - \cf9 416\cf5 , \cf9 0\cf5 );\
+\
+    glEnd();\
+    glLineWidth(\cf9 5\cf5 );\
+\
+    glBegin(GL_LINES);\
+    glColor3f(\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 282.36\cf5 , swapy - \cf9 424\cf5 , \cf9 0\cf5 );\
+    glVertex3f(\cf9 357.03\cf5 , swapy - \cf9 378.05\cf5 , \cf9 0\cf5 );\
+    glEnd();\
+    glPopMatrix();\
+\
+\
+\}\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 print\cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  x, 
+\f1\b \cf7 int
+\f0\b0 \cf5  y, 
+\f1\b \cf7 char
+\f0\b0 \cf5 * string)\
+\{\
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  len, i;\
+\
+    \cf6 //set the position of the text in the window using the x and y coordinates\cf5 \
+    \cf11 glRasterPos2f\cf5 (x, y);\
+\
+    \cf6 //get the length of the string to display\cf5 \
+    len = (
+\f1\b \cf7 int
+\f0\b0 \cf5 )\cf11 strlen\cf5 (string);\
+\
+    \cf6 //loop to display character by character\cf5 \
+    
+\f1\b \cf7 for
+\f0\b0 \cf5  (i = \cf9 0\cf5 ; i < len; i++)\
+    \{\
+        \cf11 glutBitmapCharacter\cf5 (\cf12 GLUT_BITMAP_TIMES_ROMAN_24\cf5 , string[i]);\
+    \}\
+\}\
+\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 drawWall\cf5 ()\{\
+    \cf11 glPushMatrix\cf5 ();\
+\
+        glBegin(GL_POLYGON);\
+        glColor3f(\cf9 0.545\cf5 , \cf9 .31\cf5 , \cf9 0.223\cf5 );\
+        glVertex3f(\cf9 535\cf5 , \cf9 250\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 595\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 535\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+        glLineWidth(\cf9 2\cf5 );\
+        glBegin(GL_LINES);\
+        glColor3f(\cf9 0.6\cf5 , \cf9 .6\cf5 , \cf9 0.6\cf5 );\
+        
+\f1\b \cf7 for
+\f0\b0 \cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  i=\cf9 1\cf5 ; i<\cf9 6\cf5 ;i++)\{\
+            glVertex3f(\cf9 535\cf5 , \cf9 250\cf5 +(\cf9 33.34\cf5 )*i, \cf9 0\cf5 );\
+            glVertex3f(\cf9 595\cf5 , \cf9 50\cf5 *i, \cf9 0\cf5 );\
+        \}\
+        
+\f1\b \cf7 for
+\f0\b0 \cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  i=\cf9 1\cf5 ; i<\cf9 5\cf5 ;i++)\{\
+            glVertex3f(\cf9 595\cf5 -\cf9 12\cf5 *i, \cf9 50\cf5 *i, \cf9 0\cf5 );\
+            glVertex3f(\cf9 595\cf5 -\cf9 12\cf5 *i, \cf9 300\cf5 +\cf9 30\cf5 *i, \cf9 0\cf5 );\
+        \}\
+        glEnd();\
+       \
+        glBegin(GL_POLYGON);\
+    glColor3f(\cf9 0.698\cf5 , \cf9 .341\cf5 , \cf9 0.203\cf5 );\
+        glVertex3f(\cf9 625\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 595\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+          glVertex3f(\cf9 625\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+          glEnd();\
+        glBegin(GL_POLYGON);\
+           glColor3f(\cf9 0.545\cf5 , \cf9 .31\cf5 , \cf9 0.223\cf5 );\
+           glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 625\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 565\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 535\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+           glEnd();\
+         glLineWidth(\cf9 3\cf5 );\
+        glBegin(GL_LINE_LOOP);\
+           glColor3f(\cf9 0\cf5 ,\cf9 0\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 535\cf5 , \cf9 250\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 595\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+           glVertex3f(\cf9 535\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+           glEnd();\
+       glBegin(GL_LINE_LOOP);\
+        glVertex3f(\cf9 625\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 595\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 625\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+        glBegin(GL_LINE_LOOP);\
+        glVertex3f(\cf9 595\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 625\cf5 , \cf9 300\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 565\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+        glVertex3f(\cf9 535\cf5 , \cf9 450\cf5 , \cf9 0\cf5 );\
+        glEnd();\
+      glPopMatrix();\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (isWallHitted)\{\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (turn%\cf9 2\cf5 ==\cf9 0\cf5 )  glColor3f(\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+        
+\f1\b \cf7 else
+\f0\b0 \cf5  glColor3f(\cf9 0.537\cf5 , \cf9 0.812\cf5 , \cf9 0.941\cf5 );\
+   \
+        drawCircle1(\cf9 10\cf5 , WallHitPos[\cf9 0\cf5 ], WallHitPos[\cf9 1\cf5 ]);\
+    \}\
+\}\
+\
+\
+
+\f1\b \cf7 void
+\f0\b0 \cf5  \cf8 Display\cf5 () \{\
+    \cf11 glClear\cf5 (\cf12 GL_COLOR_BUFFER_BIT\cf5 );\
+\
+    \cf6 //the sence\cf5 \
+    \cf6 //SHAPE1\cf5 \
+    \cf11 glPushMatrix\cf5 ();\
+    \cf11 glBegin\cf5 (\cf12 GL_POLYGON\cf5 );\
+    \cf11 glColor3f\cf5 (\cf9 0.992\cf5 , \cf9 0.804\cf5 , \cf9 0.404\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf9 0\cf5 , \cf10 windowYSize\cf5 , \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , \cf10 windowYSize\cf5 , \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    \cf11 glEnd\cf5 ();\
+    \cf11 glPopMatrix\cf5 ();\
+    \cf13 drawCloud\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 ,
+\f1\b \cf7 true
+\f0\b0 \cf5 );\
+       \cf13 drawCloud\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 ,
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+    \cf6 //MOOn\cf5 \
+       \cf6 //SHAPE2\cf5 \
+    \cf11 glPushMatrix\cf5 ();\
+    \cf11 glTranslatef\cf5 (\cf9 0\cf5 , -\cf10 translateMoon\cf5 , \cf9 0\cf5 );\
+        \cf11 glColor3f\cf5 (\cf9 0.9\cf5 , \cf9 0.9\cf5 , \cf9 0.9\cf5 );\
+       \cf13 drawCircle1\cf5 (\cf9 100\cf5 , \cf9 250\cf5 , \cf9 650\cf5 );\
+                   \cf11 glColor3f\cf5 (\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+                   \cf13 drawCircleHole\cf5 (\cf9 100\cf5 , \cf9 250\cf5 , \cf9 650\cf5 );\
+                \cf11 glPopMatrix\cf5 ();\
+   \
+     \cf11 glPopMatrix\cf5 ();\
+    \cf11 glPushMatrix\cf5 ();\
+    \cf11 glBegin\cf5 (\cf12 GL_QUADS\cf5 );\
+    \cf11 glColor3f\cf5 (\cf9 0.781\cf5 , \cf9 0.479\cf5 , \cf9 0.204\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf9 0\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+    \cf11 glColor3f\cf5 (\cf9 0.867\cf5 , \cf9 0.647\cf5 , \cf9 0.357\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    \cf11 glVertex3f\cf5 (\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+    \cf11 glEnd\cf5 ();\
+    \cf11 glPopMatrix\cf5 ();\
+   \
+    \
+    \cf6 //shape 3 grace\cf5 \
+    \cf11 glPushMatrix\cf5 ();\
+   \cf6 // glTranslatef(xDaynamic, 0 ,0);\cf5 \
+    
+\f1\b \cf7 int
+\f0\b0 \cf5  isMarked=\cf9 0\cf5 ;\
+    \
+     \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+    
+\f1\b \cf7 for
+\f0\b0 \cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  i=-\cf9 30\cf5 ;i<\cf10 windowXSize\cf5 ;i+=\cf9 30\cf5 )\{\
+    \
+ 
+\f1\b \cf7 int
+\f0\b0 \cf5  newSide=i+\cf9 30\cf5 ;\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5 (isMarked%\cf9 3\cf5 ==\cf10 d\cf5 %\cf9 3\cf5 )\{\
+        \cf11 glBegin\cf5 (\cf12 GL_TRIANGLES\cf5 );\
+                \cf11 glColor3f\cf5 (\cf9 0.501\cf5 , \cf9 0.745\cf5 , \cf9 0.173\cf5 );\
+            \cf11 glVertex3f\cf5 (i, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+            \cf11 glVertex3f\cf5 (i+\cf9 60\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+               \
+               \cf11 glColor3f\cf5 (\cf9 0.388\cf5 , \cf9 0.58\cf5 , \cf9 0.208\cf5 );\
+             \cf11 glVertex3f\cf5 (newSide, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 170\cf5 , \cf9 0\cf5 );\
+                \cf11 glEnd\cf5 ();\
+           \
+        \}
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+            \
+            
+\f1\b \cf7 if
+\f0\b0 \cf5 (isMarked%\cf9 3\cf5 ==(\cf10 d\cf5 +\cf9 1\cf5 )%\cf9 3\cf5 )\{\
+                \cf11 glBegin\cf5 (\cf12 GL_TRIANGLES\cf5 );\
+                               \cf11 glColor3f\cf5 (\cf9 0.501\cf5 , \cf9 0.745\cf5 , \cf9 0.173\cf5 );\
+                               \cf11 glVertex3f\cf5 (i+\cf9 60\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+                                          \cf11 glColor3f\cf5 (\cf9 0.388\cf5 , \cf9 0.58\cf5 , \cf9 0.208\cf5 );\
+                                                       \
+                                                    \cf11 glVertex3f\cf5 (i, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+                                          \
+                                                      \
+                                                     \cf11 glVertex3f\cf5 (newSide, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 170\cf5 , \cf9 0\cf5 );\
+                                             \cf11 glEnd\cf5 ();\
+          \
+            \}
+\f1\b \cf7 else
+\f0\b0 \cf5 \{\
+               \cf11 glBegin\cf5 (\cf12 GL_POLYGON\cf5 );\
+                          \cf11 glColor3f\cf5 (\cf9 0.388\cf5 , \cf9 0.58\cf5 , \cf9 0.208\cf5 );\
+                                       \
+                                    \cf11 glVertex3f\cf5 (i, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+                          \cf11 glColor3f\cf5 (\cf9 0.501\cf5 , \cf9 0.745\cf5 , \cf9 0.173\cf5 );\
+                                    \cf11 glVertex3f\cf5 (i+\cf9 60\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+                                      \
+                                     \cf11 glVertex3f\cf5 (newSide, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 170\cf5 , \cf9 0\cf5 );\
+                             \cf11 glEnd\cf5 ();\
+            \}\
+        \}\
+         \cf11 glBegin\cf5 (\cf12 GL_LINES\cf5 );\
+          \cf11 glColor3f\cf5 (\cf9 0.388\cf5 , \cf9 0.58\cf5 , \cf9 0.208\cf5 );\
+                     \
+                  \cf11 glVertex3f\cf5 (i, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+        \cf11 glColor3f\cf5 (\cf9 0.501\cf5 , \cf9 0.745\cf5 , \cf9 0.173\cf5 );\
+                    \
+                   \cf11 glVertex3f\cf5 (newSide, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 170\cf5 , \cf9 0\cf5 );\
+          \
+         \cf11 glEnd\cf5 ();\
+        \cf11 glBegin\cf5 (\cf12 GL_LINES\cf5 );\
+                 \cf11 glColor3f\cf5 (\cf9 0.388\cf5 , \cf9 0.58\cf5 , \cf9 0.208\cf5 );\
+                           \cf11 glVertex3f\cf5 (newSide, (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 170\cf5 , \cf9 0\cf5 );\
+                         \
+               \cf11 glColor3f\cf5 (\cf9 0.501\cf5 , \cf9 0.745\cf5 , \cf9 0.173\cf5 );\
+                          \cf11 glVertex3f\cf5 (i+\cf9 60\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+                         \
+                 \
+                \cf11 glEnd\cf5 ();\
+        isMarked++;\
+    \}\
+    \cf6 //wall\cf5 \
+    \cf11 glPopMatrix\cf5 ();\
+    \cf11 glBegin\cf5 (\cf12 GL_LINES\cf5 );\
+       \cf11 glColor3f\cf5 (\cf9 0.781\cf5 , \cf9 0.479\cf5 , \cf9 0.204\cf5 );\
+             \cf11 glVertex3f\cf5 (\cf9 0\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+             \cf11 glVertex3f\cf5 (\cf10 windowXSize\cf5 , (\cf10 windowYSize\cf5  / \cf9 2\cf5 ) - \cf9 200\cf5 , \cf9 0\cf5 );\
+          \
+         \cf11 glEnd\cf5 ();\
+    \cf13 drawWall\cf5 ();\
+\
+    \
+\
+    
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 inProcess\cf5  && \cf10 turn\cf5  % \cf9 2\cf5  == \cf9 1\cf5 )\
+        
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 isHit\cf5 )    \cf13 drawPicakWin\cf5 (
+\f1\b \cf7 true
+\f0\b0 \cf5 );\
+        
+\f1\b \cf7 else
+\f0\b0 \cf5  \cf13 drawPicakFight\cf5 (
+\f1\b \cf7 true
+\f0\b0 \cf5 );\
+     
+\f1\b \cf7 else
+\f0\b0 \cf5  \cf13 drawPicakSafe\cf5 (
+\f1\b \cf7 true
+\f0\b0 \cf5 );\
+     
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 inProcess\cf5  && \cf10 turn\cf5  % \cf9 2\cf5  == \cf9 0\cf5 )\
+         
+\f1\b \cf7 if
+\f0\b0 \cf5  (\cf10 isHit\cf5 )    \cf13 drawPicakWin\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+         
+\f1\b \cf7 else
+\f0\b0 \cf5  \cf13 drawPicakFight\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+     
+\f1\b \cf7 else
+\f0\b0 \cf5  \cf13 drawPicakSafe\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+\
+\
+\
+\
+    \
+    
+\f1\b \cf7 if
+\f0\b0 \cf5 (\cf10 turn\cf5 %\cf9 2\cf5 ==\cf9 0\cf5 )\cf11 glColor3f\cf5 (\cf9 1\cf5 , \cf9 0.933\cf5 , \cf9 0.549\cf5 );\
+    
+\f1\b \cf7 else
+\f0\b0 \cf5    \cf11 glColor3f\cf5 (\cf9 0.537\cf5 , \cf9 0.812\cf5 , \cf9 0.941\cf5 );\
+        \cf11 glPushMatrix\cf5 ();\
+           \cf13 drawCircle1\cf5 (\cf9 20\cf5 , \cf10 ballPos\cf5 [\cf9 0\cf5 ], \cf10 ballPos\cf5 [\cf9 1\cf5 ]);\
+              \cf11 glColor3f\cf5 (\cf9 0\cf5 , \cf9 0\cf5 , \cf9 0\cf5 );\
+              \cf13 drawCircleHole\cf5 (\cf9 10\cf5 , \cf10 ballPos\cf5 [\cf9 0\cf5 ], \cf10 ballPos\cf5 [\cf9 1\cf5 ]);\
+           \cf11 glPopMatrix\cf5 ();\
+   \
+\
+\
+    \
+    \
+\
+\
+\
+    \cf11 glPopMatrix\cf5 ();\
+    \
+    \cf13 drawCloud\cf5 (
+\f1\b \cf7 true
+\f0\b0 \cf5 ,
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+    \cf13 drawPowerBar\cf5 (
+\f1\b \cf7 false
+\f0\b0 \cf5 );\
+    \cf13 drawPowerBar\cf5 (
+\f1\b \cf7 true
+\f0\b0 \cf5 );\
+    \cf11 glPushMatrix\cf5 ();\
+    \
+    \
+    \cf13 drawHealthBar\cf5 ();\
+\
+    \
+    \cf11 glFlush\cf5 ();\
+\}\
+\
+\
+
+\f1\b \cf7 int
+\f0\b0 \cf5  \cf8 main\cf5 (
+\f1\b \cf7 int
+\f0\b0 \cf5  argc, 
+\f1\b \cf7 char
+\f0\b0 \cf5 ** argr) \{\
+    \cf11 glutInit\cf5 (&argc, argr);\
+\
+    glutInitWindowSize(\cf9 1200\cf5 , \cf9 900\cf5 );\
+    p0[\cf9 0\cf5 ] = \cf9 160\cf5 ;\
+    p0[\cf9 1\cf5 ] = \cf9 110\cf5 ;\
+\
+    p1[\cf9 0\cf5 ] = \cf9 100\cf5 ;\
+    p1[\cf9 1\cf5 ] = \cf9 500\cf5 ;\
+\
+    p2[\cf9 0\cf5 ] = \cf9 500\cf5 ;\
+    p2[\cf9 1\cf5 ] = \cf9 500\cf5 ;\
+\
+    p3[\cf9 0\cf5 ] = \cf9 980\cf5 ;\
+    p3[\cf9 1\cf5 ] = \cf9 110\cf5 ;\
+\
+    p4[\cf9 0\cf5 ] = \cf9 980\cf5 ;\
+    p4[\cf9 1\cf5 ] = \cf9 110\cf5 ;\
+    ballPos[\cf9 0\cf5 ]=-\cf9 100\cf5 ;\
+    ballPos[\cf9 1\cf5 ]=-\cf9 100\cf5 ;\
+\
+    player1Pos[\cf9 0\cf5 ] = p0[\cf9 0\cf5 ];\
+    player1Pos[\cf9 1\cf5 ] = p0[\cf9 1\cf5 ];\
+    player2Pos[\cf9 0\cf5 ] = p3[\cf9 0\cf5 ];\
+    player2Pos[\cf9 1\cf5 ] = p3[\cf9 1\cf5 ];\
+\
+    glutCreateWindow(\cf4 "Assignment"\cf5 );\
+    glutDisplayFunc(Display);\
+    glutIdleFunc(Anim);\
+    glutMouseFunc(mouseListener);\
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);\
+    glClearColor(\cf9 0.0f\cf5 , \cf9 0.0f\cf5 , \cf9 0.0f\cf5 , \cf9 0.0f\cf5 );\
+    gluOrtho2D(\cf9 0.0\cf5 , \cf9 1200\cf5 , \cf9 0.0\cf5 , \cf9 900\cf5 );\
+ \cf6 //SoundEngine->play2D("audio/pikachou.mp3", GL_TRUE);\cf5 \
+    glutMainLoop();\
+    
+\f1\b \cf7 return
+\f0\b0 \cf5  \cf9 0\cf5 ;\
+\}\
+}
